@@ -3,13 +3,22 @@ import Stripe from 'stripe';
 import { sendBookingConfirmation } from '@/lib/resend';
 import { getBookingConfirmationEmail } from '@/lib/email-templates';
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY || '';
-const stripe = stripeSecretKey && !stripeSecretKey.includes('placeholder')
-  ? new Stripe(stripeSecretKey, {
+function initStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key || key.includes('placeholder') || key.trim() === '') {
+    return null;
+  }
+  try {
+    return new Stripe(key, {
       apiVersion: '2026-01-28.clover',
-    })
-  : null;
+    });
+  } catch (error) {
+    console.error('Failed to initialize Stripe:', error);
+    return null;
+  }
+}
 
+const stripe = initStripe();
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || '';
 
 export async function POST(req: NextRequest) {
