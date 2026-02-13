@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Calendar, LogOut, ChevronDown } from 'lucide-react';
+import { User, Calendar, LogOut, ChevronDown, Settings } from 'lucide-react';
 import { useAuth } from '@/lib/auth/auth-context';
 import { useRouter } from 'next/navigation';
 import './ProfileDropdown.css';
@@ -93,6 +93,17 @@ export default function ProfileDropdown() {
               <button className="dropdown-item" onClick={handleViewBookings}>
                 <Calendar size={18} />
                 <span>View Your Bookings</span>
+              </button>
+
+              <button
+                className="dropdown-item"
+                onClick={() => {
+                  setIsOpen(false);
+                  router.push('/settings');
+                }}
+              >
+                <Settings size={18} />
+                <span>Settings</span>
               </button>
 
               {user.role === 'admin' && (
