@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Fingerprint } from 'lucide-react';
 import { useAuth } from '@/lib/auth/auth-context';
 import Link from 'next/link';
 
 export default function SignInPage() {
   const router = useRouter();
-  const { signIn } = useAuth();
+  const { signIn, signInWithBiometric, biometricAvailable, biometricType } = useAuth();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -38,6 +38,20 @@ export default function SignInPage() {
       router.push('/');
     } else {
       setError(result.error || 'Sign in failed');
+      setLoading(false);
+    }
+  };
+
+  const handleBiometricSignIn = async () => {
+    setError('');
+    setLoading(true);
+
+    const result = await signInWithBiometric();
+
+    if (result.success) {
+      router.push('/');
+    } else {
+      setError(result.error || 'Biometric authentication failed');
       setLoading(false);
     }
   };
@@ -135,6 +149,30 @@ export default function SignInPage() {
             {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
+
+        {/* Biometric Login */}
+        {biometricAvailable && (
+          <>
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-white text-[var(--text-body)]">Or continue with</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleBiometricSignIn}
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              <Fingerprint size={20} />
+              Sign in with {biometricType}
+            </button>
+          </>
+        )}
 
         {/* Sign Up Link */}
         <div className="mt-6 text-center">

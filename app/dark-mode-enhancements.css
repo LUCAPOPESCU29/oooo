@@ -1,0 +1,401 @@
+/* Dark Mode - Special Enhancements for Key Pages */
+
+/* Homepage Hero Section */
+.dark-theme .hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.dark-theme .hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(90, 122, 82, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 50%, rgba(74, 144, 226, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark-theme .hero-title {
+  background: linear-gradient(135deg, #ffffff 0%, #94c88b 50%, #6ea8e2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 4px 24px rgba(90, 122, 82, 0.4));
+}
+
+/* Cabin Cards - Special Dark Mode */
+.dark-theme .cabin-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.dark-theme .cabin-image-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(10, 10, 20, 0.9) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.dark-theme .cabin-card img {
+  filter: brightness(0.9) contrast(1.1) saturate(1.2);
+  transition: all 0.4s ease;
+}
+
+.dark-theme .cabin-card:hover img {
+  filter: brightness(1) contrast(1.15) saturate(1.3);
+  transform: scale(1.05);
+}
+
+/* Price Display */
+.dark-theme .price,
+.dark-theme .cabin-price {
+  color: #94c88b;
+  text-shadow: 0 0 20px rgba(90, 122, 82, 0.5);
+  font-weight: 700;
+}
+
+/* Booking Cards */
+.dark-theme .booking-status {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dark-theme .booking-status.confirmed {
+  background: linear-gradient(135deg, rgba(90, 122, 82, 0.3), rgba(90, 122, 82, 0.2));
+  color: #94c88b;
+  border: 1px solid rgba(90, 122, 82, 0.5);
+  box-shadow: 0 0 20px rgba(90, 122, 82, 0.3);
+}
+
+.dark-theme .booking-status.pending {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0.2));
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.5);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.dark-theme .booking-status.cancelled {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.2));
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Settings Page Dark Mode */
+.dark-theme .settings-tabs {
+  background: rgba(10, 10, 20, 0.5);
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid var(--dark-border);
+}
+
+.dark-theme .tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark-theme .tab-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(90, 122, 82, 0.1), rgba(74, 144, 226, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dark-theme .tab-btn:hover::before {
+  opacity: 1;
+}
+
+.dark-theme .tab-btn.active {
+  background: linear-gradient(135deg, rgba(90, 122, 82, 0.3), rgba(74, 144, 226, 0.3));
+  border-color: rgba(90, 122, 82, 0.5);
+  color: #ffffff;
+  box-shadow:
+    0 4px 20px rgba(90, 122, 82, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Toggle Switch Dark Mode */
+.dark-theme .toggle-slider {
+  background: rgba(30, 30, 45, 0.8);
+  border: 1px solid var(--dark-border);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.dark-theme .setting-toggle input:checked + .toggle-slider {
+  background: linear-gradient(135deg, #5a7a52 0%, #4a90e2 100%);
+  border-color: transparent;
+  box-shadow:
+    0 0 20px rgba(90, 122, 82, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* PayNow Button Dark Mode */
+.dark-theme .paynow-button {
+  background: linear-gradient(135deg, rgba(90, 122, 82, 0.3), rgba(74, 144, 226, 0.3));
+  border: 2px solid rgba(90, 122, 82, 0.6);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 40px rgba(90, 122, 82, 0.3);
+}
+
+.dark-theme .paynow-button:hover {
+  background: linear-gradient(135deg, rgba(90, 122, 82, 0.5), rgba(74, 144, 226, 0.5));
+  border-color: rgba(90, 122, 82, 0.8);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 60px rgba(90, 122, 82, 0.5);
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* Payment Method Modal Dark Mode */
+.dark-theme .payment-modal {
+  background: rgba(15, 15, 25, 0.98);
+  border: 1px solid rgba(90, 122, 82, 0.3);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 80px rgba(90, 122, 82, 0.2);
+  backdrop-filter: blur(40px) saturate(180%);
+}
+
+.dark-theme .payment-option {
+  background: rgba(20, 20, 35, 0.8);
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.dark-theme .payment-option:hover {
+  background: rgba(30, 30, 45, 0.9);
+  border-color: rgba(90, 122, 82, 0.5);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(90, 122, 82, 0.3);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Admin Panel Dark Mode */
+.dark-theme .admin-stat-card {
+  background: rgba(20, 20, 35, 0.8);
+  border: 1px solid var(--dark-border);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .admin-stat-card:hover {
+  border-color: rgba(90, 122, 82, 0.4);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 40px rgba(90, 122, 82, 0.2);
+}
+
+/* Toast Notifications Dark Mode */
+.dark-theme .save-toast,
+.dark-theme .booking-confirmation-toast {
+  background: linear-gradient(135deg, rgba(90, 122, 82, 0.95), rgba(74, 144, 226, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(90, 122, 82, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+/* Footer Dark Mode */
+.dark-theme footer {
+  background: rgba(10, 10, 20, 0.9);
+  border-top: 1px solid var(--dark-border);
+  box-shadow:
+    0 -4px 24px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Form Elements Enhanced */
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.dark-theme input:focus::placeholder,
+.dark-theme textarea:focus::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Date Picker Dark Mode */
+.dark-theme .react-datepicker {
+  background: rgba(15, 15, 25, 0.98);
+  border: 1px solid var(--dark-border);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(90, 122, 82, 0.2);
+}
+
+.dark-theme .react-datepicker__header {
+  background: rgba(20, 20, 35, 0.9);
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.dark-theme .react-datepicker__day {
+  color: #e8e8e8;
+}
+
+.dark-theme .react-datepicker__day:hover {
+  background: rgba(90, 122, 82, 0.3);
+  color: #ffffff;
+}
+
+.dark-theme .react-datepicker__day--selected {
+  background: linear-gradient(135deg, #5a7a52, #4a90e2);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(90, 122, 82, 0.5);
+}
+
+/* Loading States Dark Mode */
+.dark-theme .spinner,
+.dark-theme .loading {
+  border-color: rgba(90, 122, 82, 0.2);
+  border-top-color: rgba(90, 122, 82, 0.8);
+  box-shadow: 0 0 20px rgba(90, 122, 82, 0.3);
+}
+
+/* Signin/Signup Forms Dark Mode */
+.dark-theme .auth-container {
+  background: rgba(15, 15, 25, 0.95);
+  border: 1px solid var(--dark-border);
+  box-shadow:
+    0 16px 64px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 80px rgba(90, 122, 82, 0.15);
+}
+
+/* Cabin Details Page Dark Mode */
+.dark-theme .cabin-amenities li {
+  background: rgba(20, 20, 35, 0.6);
+  border: 1px solid var(--dark-border);
+  color: #e8e8e8;
+}
+
+.dark-theme .cabin-amenities li:hover {
+  background: rgba(30, 30, 45, 0.8);
+  border-color: rgba(90, 122, 82, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Special Glow Animation for Interactive Elements */
+@keyframes dark-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(90, 122, 82, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(90, 122, 82, 0.4);
+  }
+}
+
+.dark-theme button:focus,
+.dark-theme .btn:focus,
+.dark-theme input:focus {
+  animation: dark-glow-pulse 2s ease-in-out infinite;
+}
+
+/* Sophisticated Gradient Overlays */
+.dark-theme .section-divider {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(90, 122, 82, 0.5) 20%,
+    rgba(74, 144, 226, 0.5) 50%,
+    rgba(139, 92, 246, 0.5) 80%,
+    transparent 100%);
+  margin: 40px 0;
+}
+
+/* Floating Orbs Effect (Optional Enhancement) */
+@keyframes dark-orb-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(50px, -30px) scale(1.1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(100px, 0) scale(1);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(50px, 30px) scale(0.9);
+    opacity: 0.4;
+  }
+}
+
+.dark-theme .floating-orb-1,
+.dark-theme .floating-orb-2,
+.dark-theme .floating-orb-3 {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(80px);
+}
+
+.dark-theme .floating-orb-1 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(90, 122, 82, 0.3), transparent);
+  top: 10%;
+  left: 10%;
+  animation: dark-orb-float 20s ease-in-out infinite;
+}
+
+.dark-theme .floating-orb-2 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.2), transparent);
+  top: 60%;
+  right: 15%;
+  animation: dark-orb-float 25s ease-in-out infinite reverse;
+}
+
+.dark-theme .floating-orb-3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent);
+  bottom: 20%;
+  left: 50%;
+  animation: dark-orb-float 30s ease-in-out infinite;
+}
+
+/* Responsive Dark Mode Adjustments */
+@media (max-width: 768px) {
+  .dark-theme .floating-orb-1,
+  .dark-theme .floating-orb-2,
+  .dark-theme .floating-orb-3 {
+    display: none; /* Hide orbs on mobile for performance */
+  }
+
+  .dark-theme .cabin-card,
+  .dark-theme .booking-card {
+    animation: none; /* Disable ambient pulse on mobile */
+  }
+}

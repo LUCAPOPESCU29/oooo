@@ -1,14 +1,16 @@
 .booking-toast {
   position: fixed;
-  top: 100px;
-  right: 24px;
-  width: 380px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  max-width: calc(100% - 32px);
   background: white;
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(90, 122, 82, 0.1);
+    0 20px 60px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(90, 122, 82, 0.15);
   overflow: hidden;
   z-index: 10000;
 }
@@ -90,12 +92,37 @@
   left: 0;
 }
 
+/* Dark mode */
+.dark-theme .booking-toast {
+  background: rgba(42, 42, 42, 0.95);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(90, 122, 82, 0.3);
+}
+
+.dark-theme .booking-toast-text h3 {
+  color: #ffffff;
+}
+
+.dark-theme .booking-toast-text p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark-theme .booking-toast-close {
+  background: rgba(60, 60, 60, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dark-theme .booking-toast-close:hover {
+  background: rgba(70, 70, 70, 0.9);
+}
+
 /* Mobile responsive */
 @media (max-width: 500px) {
   .booking-toast {
     width: calc(100% - 32px);
-    right: 16px;
-    top: 16px;
   }
 
   .booking-toast-content {

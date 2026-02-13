@@ -1,0 +1,127 @@
+/* Dark Mode Cabin Details Page Styling */
+
+/* Page background in dark mode */
+.dark-theme section[class*="bg-"][class*="cream"] {
+  background: #1a1a1a !important;
+}
+
+/* Cabin details headings in dark mode */
+.dark-theme h2[class*="text-"][class*="brown"] {
+  color: #ffffff !important;
+}
+
+/* Overview paragraph text */
+.dark-theme .prose p {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Amenity boxes in dark mode */
+.dark-theme .bg-white {
+  background: rgba(42, 42, 42, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Amenity text in dark mode */
+.dark-theme .bg-white span[class*="text-body"] {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Amenity icons - keep green */
+.dark-theme .bg-white svg[class*="text-"][class*="green"] {
+  color: var(--green-deep) !important;
+}
+
+/* House Rules box in dark mode */
+.dark-theme .bg-white.rounded-xl {
+  background: rgba(42, 42, 42, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* House Rules text in dark mode */
+.dark-theme .bg-white ul li span {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* House Rules bullets - keep green */
+.dark-theme .bg-white ul li span[class*="green"] {
+  color: var(--green-deep) !important;
+}
+
+/* Booking Card in dark mode */
+.dark-theme .rounded-2xl.shadow-xl {
+  background: rgba(42, 42, 42, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Booking card headings */
+.dark-theme .rounded-2xl h3,
+.dark-theme .rounded-2xl h4 {
+  color: #ffffff !important;
+}
+
+/* Price text - change brown to WHITE in dark mode */
+.dark-theme .text-3xl[class*="green"] {
+  color: #ffffff !important; /* Price number in white */
+}
+
+/* Keep "/ night" text visible */
+.dark-theme .rounded-2xl span[class*="text-body"] {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Labels in booking card */
+.dark-theme .rounded-2xl label {
+  color: #ffffff !important;
+}
+
+/* Borders in booking card */
+.dark-theme .rounded-2xl .border-b {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-theme .rounded-2xl input,
+.dark-theme .rounded-2xl button[class*="border"] {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(30, 30, 30, 0.5) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Calendar button text */
+.dark-theme .rounded-2xl button span[class*="brown"] {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Payment instructions background */
+.dark-theme .bg-\[var\(--linen-soft\)\] {
+  background: rgba(30, 30, 30, 0.6) !important;
+}
+
+/* Payment info boxes */
+.dark-theme .bg-white.rounded-lg {
+  background: rgba(50, 50, 50, 0.7) !important;
+}
+
+/* Total amount text */
+.dark-theme .font-bold[class*="green"] {
+  color: #ffffff !important;
+}
+
+/* Success checkmark background */
+.dark-theme .bg-green-100 {
+  background: rgba(90, 122, 82, 0.2) !important;
+}
+
+/* Warning box */
+.dark-theme .bg-yellow-50 {
+  background: rgba(250, 204, 21, 0.1) !important;
+  border-color: rgba(250, 204, 21, 0.3) !important;
+}
+
+.dark-theme .text-yellow-800 {
+  color: rgba(250, 204, 21, 0.9) !important;
+}
+
+/* Photo gallery images - add subtle border */
+.dark-theme .aspect-square {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}

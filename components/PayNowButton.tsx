@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import PaymentMethodModal from './PaymentMethodModal';
 import BookingConfirmationToast from './BookingConfirmationToast';
 import './PayNowButton.css';
@@ -24,6 +25,7 @@ interface PayNowButtonProps {
 }
 
 export default function PayNowButton({ bookingData }: PayNowButtonProps = {}) {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -72,10 +74,11 @@ export default function PayNowButton({ bookingData }: PayNowButtonProps = {}) {
           // Show confirmation toast
           setShowConfirmation(true);
 
-          // Auto-hide after 5 seconds
+          // Redirect to homepage after 3 seconds
           setTimeout(() => {
             setShowConfirmation(false);
-          }, 5000);
+            router.push('/');
+          }, 3000);
         } else {
           console.error('Booking error:', data.error);
           alert(`Booking failed: ${data.error}`);
@@ -85,7 +88,8 @@ export default function PayNowButton({ bookingData }: PayNowButtonProps = {}) {
         setShowConfirmation(true);
         setTimeout(() => {
           setShowConfirmation(false);
-        }, 5000);
+          router.push('/');
+        }, 3000);
       }
     } catch (error) {
       console.error('Booking error:', error);

@@ -1,0 +1,411 @@
+/* Performance Optimizations - Speed Improvements */
+
+/* GPU Acceleration for animations */
+* {
+  will-change: auto;
+}
+
+.cabin-card,
+.card,
+.button,
+.btn,
+button,
+.modal,
+.nav-header,
+.settings-header,
+.booking-card,
+.hero-title,
+.animate-on-scroll {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Faster transitions - reduce from 0.3s to 0.15s */
+* {
+  transition-duration: 0.15s !important;
+}
+
+/* Disable expensive filters on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .cabin-card:hover,
+  .card:hover,
+  button:hover {
+    transition-duration: 0.1s !important;
+  }
+}
+
+/* Optimize images for faster loading */
+img {
+  content-visibility: auto;
+  will-change: transform;
+}
+
+/* Reduce blur amounts for better performance */
+.dark-theme .cabin-card,
+.dark-theme .card,
+.dark-theme .modal {
+  backdrop-filter: blur(10px) !important; /* Reduced from 20px */
+}
+
+.dark-theme nav,
+.dark-theme .nav-header {
+  backdrop-filter: blur(10px) saturate(150%) !important; /* Reduced from 20px/180% */
+}
+
+/* Simplify box shadows for faster rendering */
+.cabin-card,
+.card,
+.booking-card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.cabin-card:hover,
+.card:hover,
+.booking-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Disable ambient pulse animation on mobile for performance */
+@media (max-width: 768px) {
+  .dark-theme .settings-header,
+  .dark-theme .cabin-card {
+    animation: none !important;
+  }
+
+  /* Disable floating orbs on mobile */
+  .dark-theme .floating-orb-1,
+  .dark-theme .floating-orb-2,
+  .dark-theme .floating-orb-3 {
+    display: none !important;
+  }
+}
+
+/* Optimize scroll performance */
+html {
+  scroll-behavior: auto !important; /* Instant scrolling */
+}
+
+html.smooth-scroll {
+  scroll-behavior: smooth !important;
+}
+
+/* Contain layout to prevent reflows */
+.cabin-card,
+.card,
+.booking-card,
+.setting-item {
+  contain: layout style paint;
+}
+
+/* Optimize text rendering */
+body {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Lazy load images below the fold */
+img[loading="lazy"] {
+  content-visibility: auto;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize gradient performance */
+.dark-theme body {
+  background:
+    linear-gradient(135deg, #0a0e1a 0%, #0f1419 50%, #1a0f1f 100%);
+  background-attachment: fixed;
+  /* Remove expensive radial gradients */
+}
+
+/* Fast hover states */
+button,
+.btn,
+a {
+  transition: all 0.1s ease !important;
+}
+
+/* Debounce expensive effects */
+.dark-theme .cabin-card::after {
+  animation-duration: 1s !important; /* Reduced from 1.5s */
+}
+
+/* Optimize shimmer effect */
+@keyframes fast-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.dark-theme .cabin-card:hover::after {
+  animation: fast-shimmer 1s ease-in-out !important;
+}
+
+/* Remove unnecessary transforms */
+.settings-page::before,
+.dark-theme::before {
+  display: none; /* Remove decorative overlays for speed */
+}
+
+/* Optimize modal backdrop */
+.modal-backdrop {
+  backdrop-filter: blur(5px) !important; /* Reduced from higher values */
+}
+
+/* Fast page transitions */
+.page-transition {
+  transition: opacity 0.15s ease !important;
+}
+
+/* Optimize dark mode scrollbar */
+.dark-theme ::-webkit-scrollbar {
+  background: rgba(10, 10, 20, 0.8);
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+  background: rgba(90, 122, 82, 0.6); /* Simplified gradient */
+  transition: background 0.1s ease;
+}
+
+/* Instant feedback on interactions */
+button:active,
+.btn:active {
+  transform: scale(0.98) translateZ(0);
+  transition-duration: 0.05s !important;
+}
+
+/* Optimize framer-motion animations */
+[data-framer-motion] {
+  transition-duration: 0.2s !important;
+}
+
+/* Remove expensive text shadows in dark mode */
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3 {
+  text-shadow: none !important;
+}
+
+.dark-theme a:hover {
+  text-shadow: none !important;
+}
+
+/* Fast loading states */
+.spinner,
+.loading {
+  animation-duration: 0.6s !important; /* Faster spinner */
+}
+
+/* Optimize settings toggle */
+.toggle-slider {
+  transition: all 0.15s ease !important;
+}
+
+/* Remove glow effects on low-end devices */
+@media (max-width: 768px) {
+  .dark-theme .cabin-card,
+  .dark-theme .card,
+  .dark-theme button {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .dark-theme .cabin-card:hover,
+  .dark-theme .card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+  }
+}
+
+/* Instant input feedback */
+input:focus,
+textarea:focus,
+select:focus {
+  transition: all 0.1s ease !important;
+}
+
+/* Optimize date picker */
+.react-datepicker {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Fast nav transitions */
+.nav-header {
+  transition: all 0.15s ease !important;
+}
+
+/* Optimize profile dropdown */
+.profile-dropdown-menu {
+  transition: all 0.15s ease !important;
+  will-change: transform, opacity;
+}
+
+/* Remove expensive filters */
+.grain-texture::before {
+  display: none; /* Remove grain texture for speed */
+}
+
+/* Faster color transitions */
+.tab-btn,
+.setting-toggle input {
+  transition: all 0.1s ease !important;
+}
+
+/* Optimize hero section */
+.hero-section {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Fast cabin image scaling */
+.cabin-card img {
+  transition: transform 0.2s ease !important; /* Reduced from 0.4s */
+}
+
+/* Remove ambient glow animations for better performance */
+@keyframes disable-animation {
+  0%, 100% { opacity: 1; }
+}
+
+/* Optimize booking cards */
+.booking-card {
+  transition: all 0.15s ease !important;
+}
+
+/* Fast payment modal */
+.payment-modal {
+  transition: all 0.2s ease !important;
+}
+
+.payment-option {
+  transition: all 0.15s ease !important;
+}
+
+/* Optimize admin panel */
+.admin-stat-card {
+  transition: all 0.15s ease !important;
+}
+
+/* Fast toast animations */
+.save-toast,
+.biometric-toast {
+  animation-duration: 0.3s !important; /* Reduced from 0.4s */
+}
+
+/* Instant button transforms */
+.paynow-button {
+  transition: all 0.15s ease !important;
+}
+
+.paynow-button:hover {
+  transition: all 0.1s ease !important;
+}
+
+/* Optimize form elements */
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+  transition: color 0.1s ease;
+}
+
+/* Fast status badge transitions */
+.booking-status {
+  transition: all 0.1s ease !important;
+}
+
+/* Remove expensive backdrop filters on older devices */
+@supports not (backdrop-filter: blur(10px)) {
+  .dark-theme .cabin-card,
+  .dark-theme .card,
+  .dark-theme .modal,
+  .dark-theme nav {
+    backdrop-filter: none !important;
+    background: rgba(20, 20, 30, 0.98) !important;
+  }
+}
+
+/* Optimize page load */
+.settings-container,
+.cabins-section,
+.hero-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* Fast initial render */
+body {
+  font-display: swap;
+}
+
+/* Optimize animation performance */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+}
+
+/* Remove will-change after animation completes */
+.cabin-card:not(:hover),
+.card:not(:hover),
+button:not(:hover) {
+  will-change: auto;
+}
+
+/* Critical CSS for above-the-fold content */
+.hero-section,
+.nav-header {
+  contain: layout style;
+}
+
+/* Fast link transitions */
+a {
+  transition: color 0.1s ease !important;
+}
+
+/* Optimize image containers */
+.cabin-image-container {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Remove motion blur */
+* {
+  motion-path: none;
+}
+
+/* Faster initial page load */
+html {
+  content-visibility: auto;
+}
+
+/* Optimize React hydration */
+#__next {
+  isolation: isolate;
+}
+
+/* Fast smooth scrolling with reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  html.smooth-scroll {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+  }
+}
+
+/* Performance hints */
+.cabin-card,
+.card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+}

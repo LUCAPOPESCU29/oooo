@@ -67,7 +67,7 @@
   --linen-soft: #F9F5F0;
   --espresso-deep: #2A1F1A;
 
-  --text-body: #6B5B4F;
+  --text-body: #4A3F35;
 
   /* Theme Variables */
   --background: var(--cream-warm);
@@ -126,6 +126,17 @@
     font-family: var(--font-heading);
     color: var(--brown-deep);
     line-height: 1.2;
+  }
+
+  /* Ensure good contrast for cabin card text in light mode */
+  .cabin-card p,
+  .cabin-card span,
+  .cabin-card .text-sm {
+    color: #3A2920 !important;
+  }
+
+  .cabin-card h3 {
+    color: #2A1F1A !important;
   }
 
   h1 {

@@ -33,10 +33,10 @@ export function CabinsSection() {
             <StaggerItem key={cabin.id} variants={staggerItemVariants}>
               <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group">
                 {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative aspect-[4/3] overflow-hidden cabin-image-container">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+                    transition={{ duration: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
                   >
                     <Image
                       src={cabin.heroImage}
@@ -44,6 +44,10 @@ export function CabinsSection() {
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, 50vw"
+                      loading="lazy"
+                      quality={85}
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
                   </motion.div>
                 </div>
@@ -90,8 +94,7 @@ export function CabinsSection() {
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button
                       asChild
-                      variant="outline"
-                      className="flex-1 border-2 border-[var(--brown-rich)] text-[var(--brown-rich)] hover:bg-[var(--brown-rich)] hover:text-white rounded-full"
+                      className="flex-1 bg-[var(--green-deep)] text-white hover:bg-[var(--green-sage)] rounded-full"
                     >
                       <Link href={`/cabins/${cabin.slug}`}>
                         {language === 'en' ? 'View Details' : 'Vezi Detalii'}
@@ -99,7 +102,7 @@ export function CabinsSection() {
                     </Button>
                     <Button
                       asChild
-                      className="flex-1 bg-[var(--green-deep)] text-[var(--cream-warm)] hover:bg-[var(--green-sage)] rounded-full"
+                      className="flex-1 bg-[var(--green-deep)] text-white hover:bg-[var(--green-sage)] rounded-full"
                     >
                       <Link href={`/cabins/${cabin.slug}#booking`}>
                         {language === 'en' ? 'Book Now' : 'Rezervă Acum'}

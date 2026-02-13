@@ -1,0 +1,28 @@
+/* Dark Mode Gallery Styling */
+
+/* Gallery section background in dark mode */
+.dark-theme section.bg-white {
+  background: #1a1a1a !important;
+}
+
+/* Gallery heading in dark mode */
+.dark-theme section h2[class*="text-"][class*="brown"] {
+  color: #ffffff !important;
+}
+
+/* Gallery subtitle in dark mode */
+.dark-theme section p[class*="text-body"] {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Gallery image containers - keep hover effects */
+.dark-theme .aspect-\[4\/3\].rounded-lg {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Enhance hover overlay in dark mode */
+.dark-theme .aspect-\[4\/3\].rounded-lg:hover .bg-black\/20 {
+  background: rgba(90, 122, 82, 0.3) !important; /* Green overlay on hover */
+}
+
+/* Lightbox stays dark (already has bg-black/95) */

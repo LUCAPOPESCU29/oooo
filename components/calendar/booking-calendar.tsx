@@ -82,9 +82,46 @@ export function BookingCalendar({
     return date > checkInDate && date < checkOutDate;
   };
 
+  const isInvalidCheckOut = (date: Date) => {
+    // If not selecting check-out, or no check-in selected, return false
+    if (!selectingCheckOut || !checkInDate) return false;
+
+    // If date is before or same as check-in, it's invalid
+    if (date <= checkInDate) return false;
+
+    // Check if any date between check-in and this date is booked
+    const datesInRange: string[] = [];
+    for (let d = new Date(checkInDate); d < date; d.setDate(d.getDate() + 1)) {
+      datesInRange.push(d.toISOString().split('T')[0]);
+    }
+
+    return datesInRange.some(dateStr => unavailableDates.includes(dateStr));
+  };
+
   const handleDateClick = (day: number) => {
     const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-    if (!isDatePast(date) && !isDateUnavailable(date) && onDateSelect) {
+
+    // Don't allow clicking past or unavailable dates
+    if (isDatePast(date) || isDateUnavailable(date)) {
+      return;
+    }
+
+    // If selecting check-out date, verify no booked dates in range
+    if (selectingCheckOut && checkInDate && date > checkInDate) {
+      // Check all dates between check-in and proposed check-out
+      const datesInRange: string[] = [];
+      for (let d = new Date(checkInDate); d < date; d.setDate(d.getDate() + 1)) {
+        datesInRange.push(d.toISOString().split('T')[0]);
+      }
+
+      // If any date in range is booked, don't allow this selection
+      const hasBookedDate = datesInRange.some(dateStr => unavailableDates.includes(dateStr));
+      if (hasBookedDate) {
+        return; // Don't proceed with selection
+      }
+    }
+
+    if (onDateSelect) {
       onDateSelect(date);
     }
   };
@@ -167,12 +204,13 @@ export function BookingCalendar({
           const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
           const isPast = isDatePast(date);
           const isUnavailable = isDateUnavailable(date);
+          const invalidCheckOut = isInvalidCheckOut(date);
           const isSelected = isDateSelected(date);
           const isTodayDate = isToday(date);
           const isCheckIn = isCheckInDate(date);
           const isCheckOut = isCheckOutDate(date);
           const inRange = isInRange(date);
-          const isDisabled = isPast || isUnavailable;
+          const isDisabled = isPast || isUnavailable || invalidCheckOut;
 
           return (
             <motion.button

@@ -1,6 +1,14 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import {
+  isBiometricAvailable,
+  isBiometricRegistered,
+  registerBiometric,
+  authenticateBiometric,
+  removeBiometric,
+  getBiometricType,
+} from './biometric-auth';
 
 export interface User {
   id: number;
@@ -17,6 +25,13 @@ interface AuthContextType {
   signUp: (email: string, password: string, fullName: string) => Promise<{ success: boolean; error?: string }>;
   signOut: () => void;
   isAdmin: boolean;
+  // Biometric authentication
+  biometricAvailable: boolean;
+  biometricRegistered: boolean;
+  biometricType: string;
+  registerBiometricAuth: () => Promise<{ success: boolean; error?: string }>;
+  signInWithBiometric: () => Promise<{ success: boolean; error?: string }>;
+  removeBiometricAuth: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -24,6 +39,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [biometricAvailable, setBiometricAvailable] = useState(false);
+  const [biometricRegistered, setBiometricRegistered] = useState(false);
+  const [biometricType, setBiometricType] = useState('Biometric');
 
   // Check if user is logged in on mount
   useEffect(() => {
@@ -54,6 +72,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     checkAuth();
   }, []);
+
+  // Check biometric availability
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setBiometricAvailable(isBiometricAvailable());
+      setBiometricType(getBiometricType());
+    }
+  }, []);
+
+  // Check if biometric is registered for current user
+  useEffect(() => {
+    if (user) {
+      setBiometricRegistered(isBiometricRegistered(user.id.toString()));
+    } else {
+      setBiometricRegistered(false);
+    }
+  }, [user]);
 
   const signIn = async (email: string, password: string) => {
     try {
@@ -104,10 +139,100 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
+  // Biometric Authentication Methods
+
+  const registerBiometricAuth = async () => {
+    if (!user) {
+      return { success: false, error: 'You must be signed in to register biometric authentication' };
+    }
+
+    const result = await registerBiometric(
+      user.id.toString(),
+      user.fullName,
+      user.email
+    );
+
+    if (result.success) {
+      setBiometricRegistered(true);
+    }
+
+    return result;
+  };
+
+  const signInWithBiometric = async () => {
+    try {
+      // Get the last signed-in user's email from localStorage
+      const lastEmail = localStorage.getItem('last_biometric_email');
+      if (!lastEmail) {
+        return { success: false, error: 'No biometric authentication configured. Please sign in normally first.' };
+      }
+
+      // First, authenticate with biometric
+      const storedUserId = localStorage.getItem('last_user_id');
+      if (!storedUserId) {
+        return { success: false, error: 'Biometric authentication failed' };
+      }
+
+      const bioResult = await authenticateBiometric(storedUserId);
+      if (!bioResult.success) {
+        return bioResult;
+      }
+
+      // If biometric succeeds, get the stored token
+      const token = localStorage.getItem('auth_token');
+      if (token) {
+        const userResponse = await fetch('/api/auth/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          setUser(userData);
+          return { success: true };
+        }
+      }
+
+      return { success: false, error: 'Failed to authenticate. Please sign in with password.' };
+    } catch (error) {
+      console.error('Biometric sign-in error:', error);
+      return { success: false, error: 'Biometric authentication failed' };
+    }
+  };
+
+  const removeBiometricAuth = () => {
+    if (user) {
+      removeBiometric(user.id.toString());
+      setBiometricRegistered(false);
+      localStorage.removeItem('last_biometric_email');
+      localStorage.removeItem('last_user_id');
+    }
+  };
+
+  // Store user info for biometric login
+  useEffect(() => {
+    if (user && biometricRegistered) {
+      localStorage.setItem('last_biometric_email', user.email);
+      localStorage.setItem('last_user_id', user.id.toString());
+    }
+  }, [user, biometricRegistered]);
+
   const isAdmin = user?.role === 'admin';
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut, isAdmin }}>
+    <AuthContext.Provider value={{
+      user,
+      loading,
+      signIn,
+      signUp,
+      signOut,
+      isAdmin,
+      biometricAvailable,
+      biometricRegistered,
+      biometricType,
+      registerBiometricAuth,
+      signInWithBiometric,
+      removeBiometricAuth,
+    }}>
       {children}
     </AuthContext.Provider>
   );

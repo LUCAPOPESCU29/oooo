@@ -106,6 +106,23 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
       return;
     }
 
+    // Check if any date in the range is booked
+    const checkInDateObj = new Date(checkIn);
+    const checkOutDateObj = new Date(checkOut);
+    const datesInRange: string[] = [];
+
+    for (let d = new Date(checkInDateObj); d < checkOutDateObj; d.setDate(d.getDate() + 1)) {
+      datesInRange.push(d.toISOString().split('T')[0]);
+    }
+
+    const hasBookedDate = datesInRange.some(date => bookedDates.includes(date));
+    if (hasBookedDate) {
+      setError(language === 'en'
+        ? 'Some dates in your selected range are already booked. Please choose different dates.'
+        : 'Unele date din intervalul selectat sunt deja rezervate. Te rugăm să alegi alte date.');
+      return;
+    }
+
     setError('');
     setShowGuestForm(true);
   };
@@ -156,6 +173,14 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
       if (data.bookingReference) {
         setBookingReference(data.bookingReference);
         setShowPaymentInstructions(true);
+
+        // Scroll to booking card to show success message
+        setTimeout(() => {
+          const bookingCard = document.querySelector('.rounded-2xl.shadow-xl');
+          if (bookingCard) {
+            bookingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 100);
       }
     } catch (err) {
       setError(language === 'en' ? 'Something went wrong. Please try again.' : 'Ceva nu a mers bine. Te rugăm să încerci din nou.');

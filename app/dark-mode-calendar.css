@@ -1,0 +1,190 @@
+/* Dark Mode Calendar - Forest Vibing Design 🌲 */
+
+/* Calendar container - Deep forest gradient */
+.dark-theme .bg-gradient-to-br.from-white {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 35, 26, 0.95) 0%,
+    rgba(35, 45, 35, 0.95) 50%,
+    rgba(26, 35, 26, 0.95) 100%
+  ) !important;
+  border-color: rgba(90, 122, 82, 0.3) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(90, 122, 82, 0.2) inset !important;
+}
+
+/* Calendar header - Month/Year title */
+.dark-theme .bg-gradient-to-br h3 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Calendar icon */
+.dark-theme .bg-gradient-to-br svg[class*="text-"][class*="green"] {
+  color: #7fa377 !important; /* Lighter forest green */
+  filter: drop-shadow(0 2px 4px rgba(90, 122, 82, 0.3));
+}
+
+/* Navigation buttons (previous/next month) */
+.dark-theme .bg-gradient-to-br button.rounded-full {
+  background: rgba(90, 122, 82, 0.15) !important;
+  color: #c9d9c5 !important;
+  border: 1px solid rgba(90, 122, 82, 0.2);
+  transition: all 0.2s ease;
+}
+
+.dark-theme .bg-gradient-to-br button.rounded-full:hover:not(:disabled) {
+  background: rgba(90, 122, 82, 0.95) !important;
+  color: #ffffff !important;
+  border-color: rgba(90, 122, 82, 0.5);
+  box-shadow: 0 4px 12px rgba(90, 122, 82, 0.3);
+  transform: scale(1.05);
+}
+
+.dark-theme .bg-gradient-to-br button.rounded-full:disabled {
+  background: rgba(50, 50, 50, 0.3) !important;
+  color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Day names header (Sun, Mon, Tue...) */
+.dark-theme .bg-gradient-to-br .grid.gap-2 > div[class*="text-center"] {
+  color: #a8c9a3 !important; /* Soft sage green */
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Calendar day cells - Base state */
+.dark-theme .bg-gradient-to-br button.aspect-square {
+  background: rgba(50, 60, 50, 0.4) !important;
+  border: 1px solid rgba(90, 122, 82, 0.15) !important;
+  color: #d4e4d1 !important;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover state for available dates */
+.dark-theme .bg-gradient-to-br button.aspect-square:not(:disabled):hover {
+  background: rgba(90, 122, 82, 0.3) !important;
+  border-color: rgba(90, 122, 82, 0.5) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(90, 122, 82, 0.3),
+              0 0 0 2px rgba(90, 122, 82, 0.2) inset;
+  transform: translateY(-2px);
+}
+
+/* Today's date - Pine green border */
+.dark-theme .bg-gradient-to-br button.border-2[class*="border-"][class*="green"] {
+  background: rgba(60, 80, 60, 0.6) !important;
+  border: 2px solid #7fa377 !important;
+  color: #e8f5e6 !important;
+  box-shadow: 0 4px 12px rgba(90, 122, 82, 0.4),
+              0 0 20px rgba(90, 122, 82, 0.15);
+  font-weight: 700;
+}
+
+/* Selected dates (Check-in / Check-out) - Forest green gradient */
+.dark-theme .bg-gradient-to-br button.bg-gradient-to-br {
+  background: linear-gradient(135deg, #5a7a52 0%, #6a8a62 100%) !important;
+  border: 1px solid rgba(127, 163, 119, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(90, 122, 82, 0.5),
+              0 0 0 2px rgba(127, 163, 119, 0.2) inset,
+              0 0 30px rgba(90, 122, 82, 0.2);
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Dates in selected range - Soft green glow */
+.dark-theme .bg-gradient-to-br button.bg-\[var\(--green-sage\)\]\/20 {
+  background: rgba(90, 122, 82, 0.2) !important;
+  border-color: rgba(90, 122, 82, 0.25) !important;
+  color: #b8d8b3 !important;
+  box-shadow: 0 2px 8px rgba(90, 122, 82, 0.15),
+              0 0 15px rgba(90, 122, 82, 0.1) inset;
+}
+
+/* Disabled/Past dates - Dark earthy tone */
+.dark-theme .bg-gradient-to-br button.cursor-not-allowed {
+  background: rgba(35, 35, 35, 0.3) !important;
+  border-color: rgba(60, 60, 60, 0.2) !important;
+  color: rgba(150, 150, 150, 0.4) !important;
+  box-shadow: none !important;
+}
+
+/* Unavailable/Booked dates strikethrough - Red accent */
+.dark-theme .bg-gradient-to-br button .bg-red-500\/60 {
+  background: rgba(220, 38, 38, 0.7) !important;
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+}
+
+/* Empty calendar cells */
+.dark-theme .bg-gradient-to-br .grid.gap-2 > div.aspect-square:not(button) {
+  background: transparent !important;
+}
+
+/* Subtle animation on month change */
+@keyframes forestFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dark-theme .bg-gradient-to-br .grid {
+  animation: forestFadeIn 0.2s ease-out;
+}
+
+/* Add subtle texture overlay for forest feel */
+.dark-theme .bg-gradient-to-br::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(90, 122, 82, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(90, 122, 82, 0.05) 0%, transparent 50%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Glow effect for selected dates */
+.dark-theme .bg-gradient-to-br button.bg-gradient-to-br::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(circle, rgba(90, 122, 82, 0.3) 0%, transparent 70%);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dark-theme .bg-gradient-to-br button.bg-gradient-to-br:hover::after {
+  opacity: 1;
+}
+
+/* Month/Year text with forest green accent */
+.dark-theme .bg-gradient-to-br h3::before {
+  content: '🌲';
+  margin-right: 8px;
+  font-size: 1.1em;
+  filter: grayscale(20%) brightness(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .dark-theme .bg-gradient-to-br {
+    padding: 1.5rem !important;
+  }
+
+  .dark-theme .bg-gradient-to-br button.aspect-square {
+    font-size: 0.875rem;
+  }
+}

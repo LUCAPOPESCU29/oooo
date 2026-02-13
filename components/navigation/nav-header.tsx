@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, LogOut, Shield, Menu, X } from 'lucide-react';
+import { User, LogOut, Shield, Menu, X, Settings, BookOpen } from 'lucide-react';
 import { useAuth } from '@/lib/auth/auth-context';
 import { useLanguage } from '@/components/providers/language-provider';
 import { LanguageToggle } from '@/components/language-toggle';
@@ -48,7 +48,7 @@ export function NavHeader() {
         transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[var(--cream-warm)] shadow-md'
+            ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200'
             : 'bg-transparent'
         }`}
       >
@@ -249,6 +249,40 @@ export function NavHeader() {
                         )}
                       </motion.div>
 
+                      {/* My Bookings Link */}
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0, x: 20 },
+                          visible: { opacity: 1, x: 0 },
+                        }}
+                      >
+                        <Link
+                          href="/my-bookings"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="w-full flex items-center space-x-2 px-4 py-2 rounded-lg bg-[var(--green-deep)] text-white font-semibold hover:bg-[var(--green-sage)] transition-colors"
+                        >
+                          <BookOpen size={18} />
+                          <span>My Bookings</span>
+                        </Link>
+                      </motion.div>
+
+                      {/* Settings Link */}
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0, x: 20 },
+                          visible: { opacity: 1, x: 0 },
+                        }}
+                      >
+                        <Link
+                          href="/settings"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="w-full flex items-center space-x-2 px-4 py-2 rounded-lg bg-[var(--accent-color)] text-white font-semibold hover:opacity-90 transition-opacity"
+                        >
+                          <Settings size={18} />
+                          <span>Settings</span>
+                        </Link>
+                      </motion.div>
+
                       {/* Sign Out Button */}
                       <motion.div
                         variants={{
@@ -258,7 +292,7 @@ export function NavHeader() {
                       >
                         <button
                           onClick={handleSignOut}
-                          className="w-full flex items-center space-x-2 px-4 py-2 rounded-lg border-2 border-red-500 text-red-500 font-semibold"
+                          className="w-full flex items-center space-x-2 px-4 py-2 rounded-lg border-2 border-red-500 text-red-500 font-semibold hover:bg-red-50 transition-colors"
                         >
                           <LogOut size={18} />
                           <span>Sign Out</span>

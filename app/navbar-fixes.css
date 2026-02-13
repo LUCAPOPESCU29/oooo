@@ -1,0 +1,154 @@
+/* Navbar Visibility Fixes - CRITICAL */
+
+/* Ensure navbar has proper background when scrolled */
+nav.fixed {
+  min-height: 80px;
+  z-index: 9999 !important;
+}
+
+/* Target scrolled state with backdrop-blur class */
+nav.backdrop-blur-md,
+nav[class*="backdrop-blur"] {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Also target when shadow-lg is present */
+nav.shadow-lg {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dark mode navbar */
+.dark-theme nav.backdrop-blur-md,
+.dark-theme nav[class*="backdrop-blur"],
+.dark-theme nav.shadow-lg {
+  background: rgba(26, 26, 26, 0.98) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Force visibility for all navbar elements when scrolled */
+nav.backdrop-blur-md *,
+nav.shadow-lg *,
+nav[class*="bg-white"] * {
+  /* This will be overridden by more specific rules below */
+}
+
+/* Logo must be visible */
+nav[class*="bg-white"] a[class*="font-heading"],
+nav.backdrop-blur-md a[class*="font-heading"],
+nav.shadow-lg a[class*="font-heading"] {
+  color: #2A1F1A !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+}
+
+.dark-theme nav[class*="bg-white"] a[class*="font-heading"],
+.dark-theme nav.backdrop-blur-md a[class*="font-heading"],
+.dark-theme nav.shadow-lg a[class*="font-heading"] {
+  color: white !important;
+}
+
+/* Navigation links must be visible */
+nav[class*="bg-white"] a[class*="font-body"],
+nav.backdrop-blur-md a[class*="font-body"],
+nav.shadow-lg a[class*="font-body"] {
+  color: #2A1F1A !important;
+  opacity: 1 !important;
+}
+
+.dark-theme nav[class*="bg-white"] a[class*="font-body"],
+.dark-theme nav.backdrop-blur-md a[class*="font-body"],
+.dark-theme nav.shadow-lg a[class*="font-body"] {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Language toggle visibility */
+nav[class*="bg-white"] [class*="language"],
+nav.backdrop-blur-md [class*="language"],
+nav.shadow-lg [class*="language"] {
+  color: #2A1F1A !important;
+}
+
+.dark-theme nav[class*="bg-white"] [class*="language"],
+.dark-theme nav.backdrop-blur-md [class*="language"],
+.dark-theme nav.shadow-lg [class*="language"] {
+  color: white !important;
+}
+
+/* Mobile menu button visibility */
+nav[class*="bg-white"] button svg,
+nav.backdrop-blur-md button svg,
+nav.shadow-lg button svg {
+  color: #2A1F1A !important;
+}
+
+.dark-theme nav[class*="bg-white"] button svg,
+.dark-theme nav.backdrop-blur-md button svg,
+.dark-theme nav.shadow-lg button svg {
+  color: white !important;
+}
+
+/* Sign In button - keep border visible */
+nav[class*="bg-white"] a[href="/signin"],
+nav.backdrop-blur-md a[href="/signin"],
+nav.shadow-lg a[href="/signin"] {
+  color: var(--green-deep) !important;
+  border-color: var(--green-deep) !important;
+}
+
+/* Sign Up button - keep gradient */
+nav[class*="bg-white"] a[href="/signup"],
+nav.backdrop-blur-md a[href="/signup"],
+nav.shadow-lg a[href="/signup"] {
+  /* Keep gradient background */
+  color: white !important;
+}
+
+/* Sign Out button - keep red */
+nav[class*="bg-white"] button[class*="border-red"],
+nav.backdrop-blur-md button[class*="border-red"],
+nav.shadow-lg button[class*="border-red"] {
+  color: #DC2626 !important;
+  border-color: #DC2626 !important;
+}
+
+/* Profile dropdown button */
+nav[class*="bg-white"] button[class*="relative"],
+nav.backdrop-blur-md button[class*="relative"],
+nav.shadow-lg button[class*="relative"] {
+  color: #2A1F1A !important;
+}
+
+.dark-theme nav[class*="bg-white"] button[class*="relative"],
+.dark-theme nav.backdrop-blur-md button[class*="relative"],
+.dark-theme nav.shadow-lg button[class*="relative"] {
+  color: white !important;
+}
+
+/* Hover states */
+nav[class*="bg-white"] .group:hover span,
+nav.backdrop-blur-md .group:hover span,
+nav.shadow-lg .group:hover span {
+  background: var(--green-deep) !important;
+}
+
+/* Mobile menu */
+.fixed.inset-0 {
+  z-index: 9998 !important;
+}
+
+/* Make sure transparent navbar at top doesn't interfere */
+nav.bg-transparent {
+  background: transparent !important;
+}
+
+/* Ensure white background overrides everything */
+nav.bg-white\/95 {
+  background: rgba(255, 255, 255, 0.95) !important;
+}

@@ -1,0 +1,470 @@
+/* Color Contrast Fixes - Ensures readability for all accent colors */
+
+/* CRITICAL: Price text must always be visible */
+.cabin-price,
+.price,
+span.text-xl.font-semibold {
+  font-weight: 700 !important;
+}
+
+/* Light mode price visibility */
+:not(.dark-theme) .cabin-price,
+:not(.dark-theme) .price,
+:not(.dark-theme) span.text-xl.font-semibold {
+  color: #2d4a26 !important; /* Darker green for contrast */
+  text-shadow: none !important;
+}
+
+/* Dark mode price visibility */
+.dark-theme .cabin-price,
+.dark-theme .price,
+.dark-theme span.text-xl.font-semibold {
+  color: #94c88b !important; /* Bright green for dark mode */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Force white text on accent color backgrounds for good contrast */
+[style*="background: var(--accent-color)"],
+[style*="background-color: var(--accent-color)"],
+.bg-accent-color,
+button[style*="background"],
+.btn[style*="background"],
+a[style*="background: linear-gradient"] {
+  color: white !important;
+}
+
+/* Settings page - ensure white text on colored buttons */
+.settings-page button,
+.settings-page .btn {
+  color: white !important;
+}
+
+/* Navigation - force white text on accent colored elements */
+nav button[class*="bg-"],
+nav a[class*="bg-"],
+.nav-header button[class*="bg-"],
+.nav-header a[class*="bg-"] {
+  color: white !important;
+}
+
+/* Mobile menu settings link */
+.mobile-menu a[href="/settings"] {
+  color: white !important;
+}
+
+/* Ensure buttons with accent color have white text */
+button {
+  --button-text-color: white;
+}
+
+button[style*="--accent-color"],
+.paynow-button,
+.purchase--btn,
+.pay-btn {
+  color: white !important;
+}
+
+/* Gradient buttons always white text */
+[class*="gradient"],
+[style*="gradient"] {
+  color: white !important;
+}
+
+/* Links with accent color background */
+a[class*="bg-[var(--accent-color)]"],
+a[class*="bg-[var(--green"],
+Link[class*="bg-"] {
+  color: white !important;
+}
+
+/* Sign up button */
+a[href="/signup"],
+Link[href="/signup"] {
+  color: white !important;
+}
+
+/* Booking buttons */
+.booking-card button,
+.cabin-booking-card button {
+  color: white !important;
+}
+
+/* Status badges - ensure good contrast */
+.booking-status {
+  color: white !important;
+}
+
+/* Admin panel buttons */
+.admin-stat-card button {
+  color: white !important;
+}
+
+/* Dark mode - ensure text is visible on colored backgrounds */
+.dark-theme button:not(.border-red-500):not([class*="outline"]) {
+  color: white !important;
+}
+
+.dark-theme a:not(.text-):not([class*="hover:text-"]) {
+  color: inherit;
+}
+
+/* Payment modal buttons */
+.payment-option button,
+.payment-modal button:not(.close-button) {
+  color: white !important;
+}
+
+/* Profile dropdown colored items */
+.profile-dropdown-menu a:not(.text-red-500) {
+  color: var(--brown-deep);
+}
+
+.dark-theme .profile-dropdown-menu a:not(.text-red-500) {
+  color: white;
+}
+
+/* Toast notifications */
+.save-toast,
+.biometric-toast,
+.booking-confirmation-toast {
+  color: white !important;
+}
+
+/* Ensure cabin card buttons have good contrast */
+.cabin-card button,
+.cabin-card a[class*="bg-"] {
+  color: white !important;
+}
+
+/* Settings toggle - ensure labels are visible */
+.setting-toggle + label {
+  color: var(--brown-deep);
+}
+
+.dark-theme .setting-toggle + label {
+  color: white;
+}
+
+/* Tab buttons - active state */
+.tab-btn.active {
+  color: white !important;
+}
+
+/* Hero CTA buttons */
+.hero-section button,
+.hero-section a[class*="bg-"] {
+  color: white !important;
+}
+
+/* Ensure all primary actions have white text */
+.btn-primary,
+[class*="bg-green"],
+[class*="bg-blue"],
+[class*="bg-purple"],
+[style*="background: linear"] {
+  color: white !important;
+}
+
+/* Fix for light-colored accent colors (yellow, light blue, etc.) */
+/* These need dark text instead */
+button[style*="background-color: #FFD700"],
+button[style*="background-color: #FFF"],
+button[style*="background-color: #87CEEB"],
+a[style*="background-color: #FFD700"],
+a[style*="background-color: #FFF"],
+a[style*="background-color: #87CEEB"] {
+  color: #2A1F1A !important; /* Dark brown for visibility */
+}
+
+/* Light mode - ensure colored elements have white text */
+:not(.dark-theme) button[class*="bg-[var"],
+:not(.dark-theme) a[class*="bg-[var"] {
+  color: white !important;
+}
+
+/* Mobile menu buttons specifically */
+.fixed.right-0.bottom-0 button,
+.fixed.right-0.bottom-0 a {
+  color: white !important;
+}
+
+/* Override for outline/border-only buttons */
+button[class*="border-2"]:not([class*="bg-"]),
+a[class*="border-2"]:not([class*="bg-"]) {
+  color: inherit !important;
+}
+
+button.border-red-500 {
+  color: #DC2626 !important;
+}
+
+button[class*="text-red"] {
+  color: #DC2626 !important;
+}
+
+/* Ensure Settings link in mobile menu is always white */
+a[href="/settings"][class*="bg-"] {
+  color: white !important;
+}
+
+/* My Bookings link */
+a[href="/my-bookings"][class*="bg-"] {
+  color: white !important;
+}
+
+/* Admin link */
+a[href="/admin"][class*="bg-"] span {
+  color: white !important;
+}
+
+/* Fix pricing text visibility */
+.cabin-price,
+.price {
+  color: var(--green-deep);
+}
+
+.dark-theme .cabin-price,
+.dark-theme .price {
+  color: #94c88b;
+}
+
+/* Ensure form submit buttons have white text */
+form button[type="submit"] {
+  color: white !important;
+}
+
+/* PayNow modal - ensure good contrast */
+.payment-modal button:not([class*="border-"]):not(.close) {
+  color: white !important;
+}
+
+/* Settings page color picker buttons */
+.color-picker-button {
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.color-picker-button.selected {
+  border-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+/* Accent color preview */
+.accent-color-preview {
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Sign In/Sign Up CTAs */
+.auth-page button[type="submit"],
+.auth-page a[class*="bg-gradient"] {
+  color: white !important;
+}
+
+/* Biometric sign-in button */
+button[class*="blue-600"],
+button[class*="blue-500"] {
+  color: white !important;
+}
+
+/* Ensure hero section buttons are visible */
+.hero-section .btn,
+.hero-section button,
+.hero-section a[class*="gradient"] {
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Fix for any gradient backgrounds */
+[style*="linear-gradient"] {
+  color: white !important;
+}
+
+[class*="from-"] {
+  color: white !important;
+}
+
+/* Ensure cabin booking button contrast */
+.cabin-booking-card .book-button,
+.cabin-details .book-button {
+  color: white !important;
+}
+
+/* Review stars and ratings */
+.rating-star {
+  color: #FFD700; /* Gold */
+}
+
+/* Footer links */
+footer a {
+  color: var(--text-body);
+}
+
+.dark-theme footer a {
+  color: #e8e8e8;
+}
+
+footer a:hover {
+  color: var(--accent-color);
+}
+
+/* Ensure dropdown items are readable */
+select option {
+  color: var(--brown-deep);
+  background: white;
+}
+
+.dark-theme select option {
+  color: white;
+  background: #1a1a1a;
+}
+
+/* Input focus states */
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent-color);
+  outline: 2px solid rgba(var(--accent-color-rgb, 90, 122, 82), 0.2);
+}
+
+/* Checkbox and radio labels */
+label {
+  color: var(--brown-deep);
+}
+
+.dark-theme label {
+  color: #e8e8e8;
+}
+
+/* Ensure tag/badge text is readable */
+.tag,
+.badge,
+.chip {
+  background: var(--accent-color);
+  color: white !important;
+}
+
+/* Success/error states */
+.success {
+  background: #10b981;
+  color: white !important;
+}
+
+.error {
+  background: #ef4444;
+  color: white !important;
+}
+
+.warning {
+  background: #f59e0b;
+  color: white !important;
+}
+
+.info {
+  background: #3b82f6;
+  color: white !important;
+}
+
+/* CRITICAL FIX: Form labels must always be visible */
+label[class*="text-[var(--brown-deep)]"],
+label.text-sm.font-medium,
+form label {
+  color: #2A1F1A !important; /* Always dark brown */
+}
+
+.dark-theme label[class*="text-[var(--brown-deep)]"],
+.dark-theme label.text-sm.font-medium,
+.dark-theme form label {
+  color: #ffffff !important; /* Always white in dark mode */
+}
+
+/* Form icons must be visible */
+.relative svg[class*="text-[var(--text-body)]"],
+.relative svg[class*="text-[var(--brown"],
+.absolute.left-3,
+.absolute.left-3 svg {
+  color: #5A5A5A !important; /* Medium gray for visibility */
+}
+
+.dark-theme .relative svg[class*="text-[var(--text-body)]"],
+.dark-theme .relative svg[class*="text-[var(--brown"],
+.dark-theme .absolute.left-3,
+.dark-theme .absolute.left-3 svg {
+  color: #A0A0A0 !important; /* Light gray for dark mode */
+}
+
+/* Eye icon visibility */
+button[class*="text-[var(--text-body)]"] svg,
+button.absolute.right-3 svg {
+  color: #5A5A5A !important;
+}
+
+.dark-theme button[class*="text-[var(--text-body)]"] svg,
+.dark-theme button.absolute.right-3 svg {
+  color: #A0A0A0 !important;
+}
+
+/* Input placeholder text */
+input::placeholder,
+textarea::placeholder {
+  color: #9CA3AF !important; /* Medium gray */
+  opacity: 1;
+}
+
+.dark-theme input::placeholder,
+.dark-theme .dark-theme textarea::placeholder {
+  color: #6B7280 !important; /* Darker gray for dark mode */
+}
+
+/* Links in forms */
+form a,
+.auth-page a:not([class*="gradient"]):not([class*="bg-"]) {
+  color: var(--green-deep) !important;
+  font-weight: 600;
+}
+
+.dark-theme form a,
+.dark-theme .auth-page a:not([class*="gradient"]):not([class*="bg-"]) {
+  color: #94c88b !important;
+}
+
+/* Heading visibility */
+h1[class*="text-[var(--brown-deep)]"],
+h2[class*="text-[var(--brown-deep)]"],
+.text-3xl.font-bold {
+  color: #2A1F1A !important;
+}
+
+.dark-theme h1[class*="text-[var(--brown-deep)]"],
+.dark-theme h2[class*="text-[var(--brown-deep)]"],
+
+/* CRITICAL FIX: Outline buttons must have visible text */
+/* View Details / Vezi Detalii button */
+button.rounded-full.border-2:not([class*="bg-"]),
+a.rounded-full.border-2:not([class*="bg-"]),
+button.border-2:not([class*="bg-"]):not(.border-red-500),
+a.border-2:not([class*="bg-"]):not(.border-red-500) {
+  color: #6B5447 !important;
+  border-color: #6B5447 !important;
+}
+
+.dark-theme button.rounded-full.border-2:not([class*="bg-"]),
+.dark-theme a.rounded-full.border-2:not([class*="bg-"]),
+.dark-theme button.border-2:not([class*="bg-"]):not(.border-red-500),
+.dark-theme a.border-2:not([class*="bg-"]):not(.border-red-500) {
+  color: #E8DDD0 !important;
+  border-color: #E8DDD0 !important;
+}
+
+/* Hover state - background with white text */
+button.rounded-full.border-2:hover:not(.border-red-500),
+a.rounded-full.border-2:hover:not(.border-red-500) {
+  background-color: #6B5447 !important;
+  color: white !important;
+}
+
+.dark-theme button.rounded-full.border-2:hover:not(.border-red-500),
+.dark-theme a.rounded-full.border-2:hover:not(.border-red-500) {
+  background-color: #9B8474 !important;
+  color: white !important;
+}

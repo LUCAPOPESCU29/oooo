@@ -1,0 +1,519 @@
+/* Settings Effects - Applied based on user preferences */
+
+/* THEME - Dark Mode - Special Enhanced Design */
+.dark-theme {
+  --cream-warm: #0d0d0d;
+  --linen-soft: #1a1a1a;
+  --tan-light: #2a2a2a;
+  --tan-base: #3a3a3a;
+  --brown-deep: #ffffff;
+  --text-body: #e8e8e8;
+  --dark-surface: rgba(20, 20, 30, 0.95);
+  --dark-surface-hover: rgba(30, 30, 45, 0.95);
+  --dark-border: rgba(255, 255, 255, 0.08);
+  --dark-glow: rgba(90, 122, 82, 0.15);
+}
+
+.dark-theme body {
+  background:
+    radial-gradient(ellipse at top left, rgba(90, 122, 82, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at top right, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0e1a 0%, #0f1419 50%, #1a0f1f 100%);
+  color: #e8e8e8;
+  background-attachment: fixed;
+}
+
+/* Dark Mode - Enhanced Cards and Surfaces */
+.dark-theme .cabin-card,
+.dark-theme .card,
+.dark-theme .modal,
+.dark-theme .settings-content,
+.dark-theme .settings-header,
+.dark-theme .booking-card {
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 40px var(--dark-glow);
+  backdrop-filter: blur(20px);
+}
+
+.dark-theme .cabin-card:hover,
+.dark-theme .card:hover,
+.dark-theme .booking-card:hover {
+  background: var(--dark-surface-hover);
+  border-color: rgba(90, 122, 82, 0.3);
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 60px rgba(90, 122, 82, 0.25);
+  transform: translateY(-4px);
+}
+
+/* Dark Mode - Buttons */
+.dark-theme button,
+.dark-theme .btn,
+.dark-theme .pay-btn,
+.dark-theme .purchase--btn {
+  background: linear-gradient(135deg, rgba(90, 122, 82, 0.2) 0%, rgba(74, 144, 226, 0.2) 100%);
+  border: 1px solid rgba(90, 122, 82, 0.4);
+  color: #ffffff;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme button:hover,
+.dark-theme .btn:hover,
+.dark-theme .pay-btn:hover,
+.dark-theme .purchase--btn:hover {
+  background: linear-gradient(135deg, rgba(90, 122, 82, 0.4) 0%, rgba(74, 144, 226, 0.4) 100%);
+  border-color: rgba(90, 122, 82, 0.6);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 30px rgba(90, 122, 82, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Dark Mode - Override cabin card text colors for proper dark mode contrast */
+.dark-theme .cabin-card p,
+.dark-theme .cabin-card span,
+.dark-theme .cabin-card .text-sm {
+  color: #e8e8e8 !important;
+}
+
+.dark-theme .cabin-card h3 {
+  color: #ffffff !important;
+}
+
+/* Dark Mode - Inputs */
+.dark-theme input,
+.dark-theme textarea,
+.dark-theme select {
+  background: rgba(10, 10, 20, 0.8);
+  border: 1px solid var(--dark-border);
+  color: #e8e8e8;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.dark-theme input:focus,
+.dark-theme textarea:focus,
+.dark-theme select:focus {
+  background: rgba(15, 15, 25, 0.9);
+  border-color: rgba(90, 122, 82, 0.5);
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(90, 122, 82, 0.2);
+}
+
+/* Dark Mode - Navigation */
+.dark-theme nav,
+.dark-theme .nav-header {
+  background: rgba(10, 10, 20, 0.9);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--dark-border);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Dark Mode - Text Highlights */
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3 {
+  color: #ffffff;
+  text-shadow: 0 2px 20px rgba(90, 122, 82, 0.3);
+}
+
+.dark-theme a {
+  color: #94c88b;
+}
+
+.dark-theme a:hover {
+  color: #b4e8ab;
+  text-shadow: 0 0 20px rgba(90, 122, 82, 0.5);
+}
+
+/* Dark Mode - Scrollbar */
+.dark-theme ::-webkit-scrollbar {
+  width: 12px;
+  background: rgba(10, 10, 20, 0.5);
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(90, 122, 82, 0.5), rgba(74, 144, 226, 0.5));
+  border-radius: 6px;
+  border: 2px solid rgba(10, 10, 20, 0.5);
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(90, 122, 82, 0.7), rgba(74, 144, 226, 0.7));
+}
+
+/* Dark Mode - Profile Dropdown */
+.dark-theme .profile-dropdown-menu {
+  background: rgba(15, 15, 25, 0.98);
+  border: 1px solid var(--dark-border);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 60px rgba(90, 122, 82, 0.2);
+}
+
+/* Dark Mode - Settings Items */
+.dark-theme .setting-item {
+  background: rgba(20, 20, 35, 0.6);
+  border: 1px solid var(--dark-border);
+}
+
+.dark-theme .setting-item:hover {
+  background: rgba(30, 30, 45, 0.8);
+  border-color: rgba(90, 122, 82, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark Mode - Special Glow Effect */
+.dark-theme .cabin-card::before,
+.dark-theme .booking-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(90, 122, 82, 0.5) 50%,
+    transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dark-theme .cabin-card:hover::before,
+.dark-theme .booking-card:hover::before {
+  opacity: 1;
+}
+
+/* Dark Mode - Ambient Animation */
+@keyframes dark-ambient-pulse {
+  0%, 100% {
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      0 0 40px rgba(90, 122, 82, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      0 0 60px rgba(90, 122, 82, 0.2);
+  }
+}
+
+.dark-theme .settings-header,
+.dark-theme .cabin-card {
+  animation: dark-ambient-pulse 4s ease-in-out infinite;
+}
+
+/* Dark Mode - Special Background Pattern */
+.dark-theme::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(90, 122, 82, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(74, 144, 226, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Dark Mode - Shimmer Effect on Hover */
+@keyframes dark-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.dark-theme .cabin-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%);
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.dark-theme .cabin-card:hover::after {
+  animation: dark-shimmer 1.5s ease-in-out;
+}
+
+/* BACKGROUND PATTERNS */
+[data-bg-pattern="dots"]::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle, rgba(90, 122, 82, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-bg-pattern="grid"]::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(90, 122, 82, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90, 122, 82, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-bg-pattern="waves"]::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%235A7A52' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* GLASS EFFECT */
+.glass-effect button,
+.glass-effect .modal,
+.glass-effect .card,
+.glass-effect .dropdown-menu {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* NEON GLOW */
+.neon-glow button:hover,
+.neon-glow .pay-btn:hover,
+.neon-glow .purchase--btn:hover {
+  box-shadow:
+    0 0 20px var(--accent-color),
+    0 0 40px var(--accent-color),
+    0 0 60px var(--accent-color) !important;
+  animation: neon-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes neon-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+.neon-glow h1,
+.neon-glow h2 {
+  text-shadow: 0 0 10px var(--accent-color);
+}
+
+/* PARTICLE EFFECTS */
+.particle-effects::after {
+  content: '';
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle, rgba(90, 122, 82, 0.3) 1px, transparent 1px);
+  background-size: 50px 50px, 80px 80px;
+  background-position: 0 0, 40px 60px;
+  animation: particle-float 20s linear infinite;
+  z-index: 1;
+  opacity: 0.3;
+}
+
+@keyframes particle-float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100px); }
+}
+
+/* CURSOR TRAIL */
+.cursor-trail {
+  cursor: none;
+}
+
+.cursor-trail::before {
+  content: '';
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  animation: cursor-pulse 1s ease-in-out infinite;
+}
+
+@keyframes cursor-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.5); opacity: 0.8; }
+}
+
+/* ENHANCED HOVER EFFECTS */
+.enhanced-hover button:hover,
+.enhanced-hover a:hover,
+.enhanced-hover .card:hover {
+  transform: translateY(-4px) scale(1.02) !important;
+  transition: all calc(var(--animation-speed, 0.3s) * 0.8) cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* REDUCED MOTION */
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* FONT SIZE */
+html {
+  font-size: var(--base-font-size, 16px);
+}
+
+/* ANIMATION SPEED */
+* {
+  transition-duration: var(--animation-speed, 0.3s);
+}
+
+/* EXPERIMENTAL UI */
+.experimental-ui {
+  --border-radius: 24px;
+}
+
+.experimental-ui button,
+.experimental-ui .card,
+.experimental-ui input,
+.experimental-ui .modal {
+  border-radius: var(--border-radius) !important;
+  transform-style: preserve-3d;
+  transition: all var(--animation-speed) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.experimental-ui button:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
+}
+
+/* PAGE TRANSITIONS */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all var(--animation-speed);
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all var(--animation-speed);
+}
+
+/* LOADING ANIMATIONS */
+@keyframes settings-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes settings-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.95); }
+}
+
+/* DEVELOPER MODE */
+body:has([data-dev-mode="true"]) {
+  outline: 2px dashed #4a90e2;
+  outline-offset: -2px;
+}
+
+body:has([data-dev-mode="true"])::after {
+  content: '🔧 DEV MODE';
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: #4a90e2;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* AUTO-PLAY VIDEOS */
+video[data-autoplay="false"] {
+  pointer-events: auto;
+}
+
+/* SMOOTH SCROLLING */
+html[style*="scroll-behavior: smooth"] {
+  scroll-behavior: smooth !important;
+}
+
+/* PARALLAX EFFECTS */
+.parallax-section {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.parallax-content {
+  transform: translateZ(0);
+  transition: transform 0.3s ease-out;
+}
+
+/* ACCESSIBILITY - High Contrast */
+@media (prefers-contrast: high) {
+  :root {
+    --contrast-boost: 1.2;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .particle-effects::after {
+    opacity: 0.1;
+  }
+
+  .cursor-trail {
+    cursor: auto;
+  }
+
+  .cursor-trail::before {
+    display: none;
+  }
+}
