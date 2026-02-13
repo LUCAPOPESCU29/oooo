@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--cream-warm);
 }
 
 .modal {
@@ -18,6 +18,7 @@
     0px 12px 26px rgba(0, 0, 0, 0.1),
     0px 0px 0px rgba(0, 0, 0, 0.1);
   border-radius: 26px;
+  border: 1px solid var(--tan-light);
   max-width: 450px;
   width: 100%;
 }
@@ -39,23 +40,24 @@
 
 .payment--options button {
   height: 55px;
-  background: #f2f2f2;
+  background: var(--linen-soft);
   border-radius: 11px;
   padding: 0;
-  border: 0;
+  border: 2px solid var(--tan-light);
   outline: none;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .payment--options button:hover {
-  background: #e8e8e8;
+  background: var(--tan-light);
   transform: translateY(-2px);
+  border-color: var(--green-sage);
 }
 
 .payment--options button.selected {
-  background: #e0e7ff;
-  border: 2px solid #667eea;
+  background: rgba(90, 122, 82, 0.1);
+  border: 2px solid var(--green-deep);
 }
 
 .payment--options button svg {
@@ -71,7 +73,7 @@
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 10px;
-  color: #8b8e98;
+  color: var(--text-body);
   margin: 0 10px;
 }
 
@@ -89,7 +91,7 @@
   width: 100%;
   height: 1px;
   border: 0;
-  background-color: #e8e8e8;
+  background-color: var(--tan-light);
   margin: auto;
 }
 
@@ -119,8 +121,9 @@
 
 .input_label {
   font-size: 10px;
-  color: #8b8e98;
+  color: var(--brown-deep);
   font-weight: 600;
+  font-family: var(--font-body);
 }
 
 .input_field {
@@ -129,38 +132,38 @@
   padding: 0 0 0 16px;
   border-radius: 9px;
   outline: none;
-  background-color: #f2f2f2;
-  border: 1px solid #e5e5e500;
+  background-color: var(--linen-soft);
+  border: 2px solid var(--tan-light);
   transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+  color: var(--brown-deep);
+  font-family: var(--font-body);
 }
 
 .input_field:focus {
-  border: 1px solid transparent;
-  box-shadow: 0px 0px 0px 2px #242424;
-  background-color: transparent;
+  border: 2px solid var(--green-deep);
+  box-shadow: 0px 0px 0px 3px rgba(90, 122, 82, 0.1);
+  background-color: white;
 }
 
 .purchase--btn {
   height: 55px;
-  background: #f2f2f2;
-  border-radius: 11px;
+  border-radius: 9999px;
   border: 0;
   outline: none;
-  color: #ffffff;
-  font-size: 13px;
+  color: var(--cream-warm);
+  font-size: 16px;
   font-weight: 700;
-  background: linear-gradient(180deg, #363636 0%, #1b1b1b 50%, #000000 100%);
-  box-shadow:
-    0px 0px 0px 0px #ffffff,
-    0px 0px 0px 0px #000000;
+  background: var(--green-deep);
+  box-shadow: 0 2px 8px rgba(90, 122, 82, 0.2);
   transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
   cursor: pointer;
+  font-family: var(--font-body);
 }
 
 .purchase--btn:hover {
-  box-shadow:
-    0px 0px 0px 2px #ffffff,
-    0px 0px 0px 4px #0000003a;
+  background: var(--green-sage);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(90, 122, 82, 0.3);
 }
 
 /* Reset input number styles */
