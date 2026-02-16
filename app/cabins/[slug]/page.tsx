@@ -51,7 +51,7 @@ export default async function CabinPage({ params }: CabinPageProps) {
             <div className="mb-12 flex justify-center">
               <VirtualTour
                 cabinName={cabin.name}
-                images={[cabin.heroImage, ...(cabin.gallery || [])]}
+                images={cabin.images}
               />
             </div>
 
