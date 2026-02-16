@@ -64,12 +64,8 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
           setSettings(settingsData.settings);
         }
 
-        // Fetch cabin price from database
-        const cabinResponse = await fetch(`/api/cabins/${cabin.slug}`);
-        const cabinData = await cabinResponse.json();
-        if (cabinData.cabin && cabinData.cabin.price_per_night) {
-          setCabinPrice(Number(cabinData.cabin.price_per_night));
-        }
+        // Use cabin price from props (already available)
+        setCabinPrice(cabin.price);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
