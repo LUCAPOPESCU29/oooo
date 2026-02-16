@@ -196,16 +196,16 @@
 .cabin-info h3 {
   font-size: 20px;
   font-weight: 700;
-  color: var(--brown-deep);
+  color: #000000;
   margin: 0 0 4px 0;
   font-family: var(--font-heading);
 }
 
 .booking-ref {
-  font-size: 13px;
-  color: var(--text-body);
+  font-size: 14px;
+  color: #000000;
   font-family: 'Courier New', monospace;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* Status Badge */
@@ -268,16 +268,17 @@
 
 .info-label {
   font-size: 11px;
-  color: var(--text-body);
+  color: #000000;
   font-family: var(--font-body);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  opacity: 0.6;
 }
 
 .info-value {
   font-size: 14px;
   font-weight: 600;
-  color: var(--brown-deep);
+  color: #000000;
   font-family: var(--font-body);
 }
 
@@ -302,7 +303,7 @@
   border-radius: 8px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--brown-deep);
+  color: #000000;
   font-family: var(--font-body);
 }
 
@@ -328,10 +329,11 @@
 
 .price-label {
   font-size: 11px;
-  color: var(--text-body);
+  color: #000000;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-family: var(--font-body);
+  opacity: 0.6;
 }
 
 .price-value {

@@ -4,17 +4,18 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, LogOut, Shield, Menu, X, Settings, BookOpen } from 'lucide-react';
+import { User, LogOut, Shield, Menu, X, Settings, BookOpen, MessageSquare } from 'lucide-react';
 import { useAuth } from '@/lib/auth/auth-context';
 import { useLanguage } from '@/components/providers/language-provider';
 import { LanguageToggle } from '@/components/language-toggle';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { Button } from '@/components/ui/button';
 import ProfileDropdown from '@/components/ProfileDropdown';
 
 export function NavHeader() {
   const { user, signOut, isAdmin } = useAuth();
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -23,6 +24,7 @@ export function NavHeader() {
     { href: '/#cabins', label: t.nav.ourCabins },
     { href: '/#gallery', label: t.nav.gallery },
     { href: '/#experience', label: t.nav.experience },
+    { href: '/booking-lookup', label: t.nav.trackBooking || (language === 'en' ? 'Track Booking' : 'Verificare Rezervare') },
   ];
 
   useEffect(() => {
@@ -46,25 +48,20 @@ export function NavHeader() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200'
-            : 'bg-transparent'
-        }`}
+        className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200 transition-all duration-300"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Left Side: Language Toggle */}
-            <div className={`hidden md:block ${isScrolled ? 'text-[var(--brown-deep)]' : 'text-white'}`}>
+            {/* Left Side: Language & Theme Toggle */}
+            <div className="hidden md:flex items-center gap-2 text-[var(--brown-deep)]">
+              <ThemeToggle />
               <LanguageToggle />
             </div>
 
             {/* Center: Logo */}
             <Link
               href="/"
-              className={`font-[family-name:var(--font-heading)] text-2xl font-semibold transition-colors ${
-                isScrolled ? 'text-[var(--brown-deep)]' : 'text-white'
-              }`}
+              className="font-[family-name:var(--font-heading)] text-2xl font-semibold text-[var(--brown-deep)] transition-colors"
             >
               THE A-FRAME
             </Link>
@@ -75,32 +72,33 @@ export function NavHeader() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative font-[family-name:var(--font-body)] font-medium transition-colors group ${
-                    isScrolled ? 'text-[var(--brown-deep)]' : 'text-white'
-                  }`}
+                  className="relative font-[family-name:var(--font-body)] font-medium text-[var(--brown-deep)] transition-colors group"
                 >
                   {link.label}
                   <motion.span
-                    className={`absolute -bottom-1 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-300 ${
-                      isScrolled ? 'bg-[var(--green-deep)]' : 'bg-white'
-                    }`}
+                    className="absolute -bottom-1 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-300 bg-[var(--green-deep)]"
                   />
                 </Link>
               ))}
 
               {user ? (
                 <>
+                  {/* Messages Icon */}
+                  <Link
+                    href="/messages"
+                    className="relative flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[var(--green-deep)] to-[var(--green-sage)] text-white hover:shadow-lg transition-all duration-300"
+                    title="Messages"
+                  >
+                    <MessageSquare size={20} />
+                  </Link>
+
                   {/* Profile Dropdown */}
                   <ProfileDropdown />
 
                   {/* Sign Out Button */}
                   <button
                     onClick={handleSignOut}
-                    className={`flex items-center space-x-1 px-3 py-2 rounded-full font-semibold transition-all duration-300 text-sm ${
-                      isScrolled
-                        ? 'border-2 border-red-500 text-red-500 hover:bg-red-50'
-                        : 'border-2 border-white text-white hover:bg-white/20'
-                    }`}
+                    className="flex items-center space-x-1 px-3 py-2 rounded-full font-semibold transition-all duration-300 text-sm border-2 border-red-500 text-red-500 hover:bg-red-50"
                   >
                     <LogOut size={16} />
                     <span>Sign Out</span>
@@ -111,11 +109,7 @@ export function NavHeader() {
                   {/* Sign In Button */}
                   <Link
                     href="/signin"
-                    className={`px-4 py-2 rounded-full font-semibold transition-all duration-300 ${
-                      isScrolled
-                        ? 'border-2 border-[var(--green-deep)] text-[var(--green-deep)] hover:bg-[var(--green-soft)] hover:text-white'
-                        : 'border-2 border-white text-white hover:bg-white/20'
-                    }`}
+                    className="px-4 py-2 rounded-full font-semibold transition-all duration-300 border-2 border-[var(--green-deep)] text-[var(--green-deep)] hover:bg-[var(--green-deep)] hover:text-white"
                   >
                     Sign In
                   </Link>
@@ -134,9 +128,7 @@ export function NavHeader() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`md:hidden p-2 transition-colors ${
-                isScrolled ? 'text-[var(--brown-deep)]' : 'text-white'
-              }`}
+              className="md:hidden p-2 text-[var(--brown-deep)] transition-colors"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -263,6 +255,23 @@ export function NavHeader() {
                         >
                           <BookOpen size={18} />
                           <span>My Bookings</span>
+                        </Link>
+                      </motion.div>
+
+                      {/* Messages Link */}
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0, x: 20 },
+                          visible: { opacity: 1, x: 0 },
+                        }}
+                      >
+                        <Link
+                          href="/messages"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="w-full flex items-center space-x-2 px-4 py-2 rounded-lg bg-[var(--green-sage)] text-white font-semibold hover:bg-[var(--green-deep)] transition-colors"
+                        >
+                          <MessageSquare size={18} />
+                          <span>Messages</span>
                         </Link>
                       </motion.div>
 

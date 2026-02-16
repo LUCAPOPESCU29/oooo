@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/components/providers/language-provider';
 import { LanguageToggle } from '@/components/language-toggle';
@@ -74,6 +74,15 @@ export function Navigation() {
               <div className={isScrolled ? 'text-[var(--brown-deep)]' : 'text-white'}>
                 <LanguageToggle />
               </div>
+              <Link href="/report-issue">
+                <Button
+                  size="lg"
+                  className="bg-orange-600 text-white hover:bg-orange-700 rounded-full px-4 flex items-center gap-2 shadow-lg hover:shadow-xl transition-all"
+                >
+                  <Wrench size={18} />
+                  {t.language === 'en' ? 'Report Issue' : 'Raportează'}
+                </Button>
+              </Link>
               <Link href="/#booking">
                 <Button
                   size="lg"
@@ -177,6 +186,23 @@ export function Navigation() {
                       visible: { opacity: 1, x: 0 },
                     }}
                     className="mt-4"
+                  >
+                    <Link href="/report-issue" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button
+                        size="lg"
+                        className="w-full bg-orange-600 text-white hover:bg-orange-700 rounded-full flex items-center justify-center gap-2 mb-3"
+                      >
+                        <Wrench size={18} />
+                        {t.language === 'en' ? 'Report Issue' : 'Raportează Problemă'}
+                      </Button>
+                    </Link>
+                  </motion.div>
+
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, x: 20 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
                   >
                     <Link href="/#booking" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button

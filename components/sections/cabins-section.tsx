@@ -31,7 +31,7 @@ export function CabinsSection() {
         <StaggerContainer className="grid md:grid-cols-2 gap-8 md:gap-12">
           {cabins.map((cabin) => (
             <StaggerItem key={cabin.id} variants={staggerItemVariants}>
-              <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group">
+              <Card className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 cursor-pointer">
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden cabin-image-container">
                   <motion.div

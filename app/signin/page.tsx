@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function SignInPage() {
   const router = useRouter();
-  const { signIn, signInWithBiometric, biometricAvailable, biometricType } = useAuth();
+  const { signIn, signInWithBiometric, biometricAvailable, biometricRegistered, biometricType } = useAuth();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -108,7 +108,7 @@ export default function SignInPage() {
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent text-black"
                 placeholder="john@example.com"
                 disabled={loading}
               />
@@ -126,7 +126,7 @@ export default function SignInPage() {
                 type={showPassword ? 'text' : 'password'}
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full pl-10 pr-12 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+                className="w-full pl-10 pr-12 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent text-black"
                 placeholder="••••••••"
                 disabled={loading}
               />
@@ -141,17 +141,19 @@ export default function SignInPage() {
           </div>
 
           {/* Submit Button */}
-          <button
+          <motion.button
             type="submit"
             disabled={loading}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             className="w-full bg-gradient-to-r from-[var(--green-deep)] to-[var(--green-soft)] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Signing In...' : 'Sign In'}
-          </button>
+          </motion.button>
         </form>
 
-        {/* Biometric Login */}
-        {biometricAvailable && (
+        {/* Biometric Login - Only show if registered */}
+        {biometricAvailable && biometricRegistered && (
           <>
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
@@ -172,6 +174,23 @@ export default function SignInPage() {
               Sign in with {biometricType}
             </button>
           </>
+        )}
+
+        {/* Biometric Setup Info - Show if available but not registered */}
+        {biometricAvailable && !biometricRegistered && (
+          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <Fingerprint className="text-blue-600 mt-0.5 flex-shrink-0" size={20} />
+              <div>
+                <p className="text-sm font-medium text-black mb-1">
+                  Enable {biometricType} Login
+                </p>
+                <p className="text-xs text-black">
+                  Sign in with your password first, then enable biometric login in Settings for faster access next time.
+                </p>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Sign Up Link */}

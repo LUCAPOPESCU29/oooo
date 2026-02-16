@@ -13,14 +13,35 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  Shield
+  Shield,
+  BarChart3,
+  UserCog,
+  Tag,
+  Wrench,
+  Gift,
+  Mail,
+  FileText,
+  Globe,
+  Settings,
+  Zap,
+  MessageSquare
 } from 'lucide-react';
 import { AdminBookings } from '@/components/admin/admin-bookings';
 import { AdminReviews } from '@/components/admin/admin-reviews';
+import { AnalyticsDashboard } from '@/components/admin/analytics-dashboard';
+import { CustomerManagement } from '@/components/admin/customer-management';
+import { AdminPricing } from '@/components/admin/admin-pricing';
+import { MaintenanceTracker } from '@/components/admin/maintenance-tracker';
+import { PromoCodes } from '@/components/admin/promo-codes';
+import { EmailCampaigns } from '@/components/admin/email-campaigns';
+import { ReportsExport } from '@/components/admin/reports-export';
+import { AdminSettings } from '@/components/admin/admin-settings';
+import { DateChangeRequests } from '@/components/admin/date-change-requests';
+import { AdminMessages } from '@/components/admin/admin-messages';
 import { db } from '@/lib/db';
 import { useAuth } from '@/lib/auth/auth-context';
 
-type Tab = 'dashboard' | 'bookings' | 'reviews';
+type Tab = 'dashboard' | 'bookings' | 'messages' | 'date-requests' | 'reviews' | 'analytics' | 'customers' | 'pricing' | 'maintenance' | 'promos' | 'marketing' | 'reports' | 'settings';
 
 export default function AdminPage() {
   const router = useRouter();
@@ -93,37 +114,85 @@ export default function AdminPage() {
 
       {/* Tabs */}
       <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="bg-white rounded-xl shadow-sm p-2 flex gap-2">
-          <button
+        <div className="bg-white rounded-xl shadow-sm p-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+          <TabButton
+            active={activeTab === 'dashboard'}
             onClick={() => setActiveTab('dashboard')}
-            className={`flex-1 px-6 py-3 rounded-lg font-medium transition-all ${
-              activeTab === 'dashboard'
-                ? 'bg-[var(--green-deep)] text-white'
-                : 'text-[var(--text-body)] hover:bg-[var(--linen-soft)]'
-            }`}
-          >
-            Dashboard
-          </button>
-          <button
+            icon={Home}
+            label="Dashboard"
+          />
+          <TabButton
+            active={activeTab === 'analytics'}
+            onClick={() => setActiveTab('analytics')}
+            icon={BarChart3}
+            label="Analytics"
+          />
+          <TabButton
+            active={activeTab === 'bookings'}
             onClick={() => setActiveTab('bookings')}
-            className={`flex-1 px-6 py-3 rounded-lg font-medium transition-all ${
-              activeTab === 'bookings'
-                ? 'bg-[var(--green-deep)] text-white'
-                : 'text-[var(--text-body)] hover:bg-[var(--linen-soft)]'
-            }`}
-          >
-            Bookings
-          </button>
-          <button
+            icon={Calendar}
+            label="Bookings"
+          />
+          <TabButton
+            active={activeTab === 'messages'}
+            onClick={() => setActiveTab('messages')}
+            icon={MessageSquare}
+            label="Messages"
+          />
+          <TabButton
+            active={activeTab === 'date-requests'}
+            onClick={() => setActiveTab('date-requests')}
+            icon={Zap}
+            label="Date Requests"
+          />
+          <TabButton
+            active={activeTab === 'customers'}
+            onClick={() => setActiveTab('customers')}
+            icon={UserCog}
+            label="Customers"
+          />
+          <TabButton
+            active={activeTab === 'pricing'}
+            onClick={() => setActiveTab('pricing')}
+            icon={Tag}
+            label="Pricing"
+          />
+          <TabButton
+            active={activeTab === 'maintenance'}
+            onClick={() => setActiveTab('maintenance')}
+            icon={Wrench}
+            label="Maintenance"
+          />
+          <TabButton
+            active={activeTab === 'promos'}
+            onClick={() => setActiveTab('promos')}
+            icon={Gift}
+            label="Promos"
+          />
+          <TabButton
+            active={activeTab === 'marketing'}
+            onClick={() => setActiveTab('marketing')}
+            icon={Mail}
+            label="Marketing"
+          />
+          <TabButton
+            active={activeTab === 'reviews'}
             onClick={() => setActiveTab('reviews')}
-            className={`flex-1 px-6 py-3 rounded-lg font-medium transition-all ${
-              activeTab === 'reviews'
-                ? 'bg-[var(--green-deep)] text-white'
-                : 'text-[var(--text-body)] hover:bg-[var(--linen-soft)]'
-            }`}
-          >
-            Reviews
-          </button>
+            icon={Star}
+            label="Reviews"
+          />
+          <TabButton
+            active={activeTab === 'reports'}
+            onClick={() => setActiveTab('reports')}
+            icon={FileText}
+            label="Reports"
+          />
+          <TabButton
+            active={activeTab === 'settings'}
+            onClick={() => setActiveTab('settings')}
+            icon={Settings}
+            label="Settings"
+          />
         </div>
       </div>
 
@@ -215,7 +284,17 @@ export default function AdminPage() {
         )}
 
         {activeTab === 'bookings' && <AdminBookings onUpdate={loadStats} />}
+        {activeTab === 'messages' && <AdminMessages />}
+        {activeTab === 'date-requests' && <DateChangeRequests />}
         {activeTab === 'reviews' && <AdminReviews onUpdate={loadStats} />}
+        {activeTab === 'analytics' && <AnalyticsDashboard />}
+        {activeTab === 'customers' && <CustomerManagement />}
+        {activeTab === 'pricing' && <AdminPricing />}
+        {activeTab === 'maintenance' && <MaintenanceTracker />}
+        {activeTab === 'promos' && <PromoCodes />}
+        {activeTab === 'marketing' && <EmailCampaigns />}
+        {activeTab === 'reports' && <ReportsExport />}
+        {activeTab === 'settings' && <AdminSettings />}
       </div>
     </div>
   );
@@ -278,5 +357,31 @@ function StatusCard({
       </div>
       <div className="text-3xl font-bold text-[var(--brown-deep)]">{value}</div>
     </div>
+  );
+}
+
+function TabButton({
+  active,
+  onClick,
+  icon: Icon,
+  label
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: any;
+  label: string;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
+        active
+          ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg'
+          : 'text-[var(--text-body)] hover:bg-[var(--linen-soft)]'
+      }`}
+    >
+      <Icon size={18} />
+      <span className="hidden sm:inline">{label}</span>
+    </button>
   );
 }

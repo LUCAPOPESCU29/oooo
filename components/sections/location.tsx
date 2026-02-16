@@ -5,6 +5,8 @@ import { MapPin, Car, Plane, Backpack } from 'lucide-react';
 import { FadeIn } from '@/components/animations/fade-in';
 import { useLanguage } from '@/components/providers/language-provider';
 import { InteractiveMap } from '@/components/map/interactive-map';
+import { AzugaWeatherWidget } from '@/components/widgets/AzugaWeatherWidget';
+import { LocalInfoWidget } from '@/components/widgets/LocalInfoWidget';
 
 export function Location() {
   const { t } = useLanguage();
@@ -48,9 +50,9 @@ export function Location() {
 
         <div className="grid md:grid-cols-2 gap-12 md:gap-16">
 
-          {/* Location Info */}
+          {/* Location Info - Left Side */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
@@ -109,6 +111,21 @@ export function Location() {
                 );
               })}
             </div>
+          </motion.div>
+
+          {/* Widgets - Right Side */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1], delay: 0.2 }}
+            className="space-y-6"
+          >
+            {/* Weather Widget */}
+            <AzugaWeatherWidget />
+
+            {/* Local Info Widgets */}
+            <LocalInfoWidget />
           </motion.div>
         </div>
       </div>

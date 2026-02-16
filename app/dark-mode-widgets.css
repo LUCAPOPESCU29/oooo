@@ -1,0 +1,106 @@
+/* Dark Mode - Widgets Styling */
+
+/* Weather Widget Dark Mode */
+.dark-theme .bg-gradient-to-br.from-\[var\(--green-deep\)\] {
+  background: linear-gradient(135deg,
+    rgba(90, 154, 90, 0.9) 0%,
+    rgba(74, 134, 74, 0.9) 100%) !important;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(144, 238, 144, 0.2) !important;
+}
+
+.dark-theme .bg-gradient-to-br.from-\[var\(--green-deep\)\]:hover {
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(144, 238, 144, 0.3) !important;
+}
+
+/* Local Info Widget Cards - Dark Mode */
+.dark-theme .bg-white.p-4.rounded-xl {
+  background: rgba(30, 40, 30, 0.8) !important;
+  border: 1px solid rgba(144, 238, 144, 0.2);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(144, 238, 144, 0.1) !important;
+}
+
+.dark-theme .bg-white.p-4.rounded-xl:hover {
+  background: rgba(35, 45, 35, 0.9) !important;
+  border-color: rgba(144, 238, 144, 0.3);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(144, 238, 144, 0.15) !important;
+}
+
+/* Widget Icon Backgrounds */
+.dark-theme .bg-\[var\(--green-soft\)\] {
+  background: rgba(144, 238, 144, 0.15) !important;
+  border: 1px solid rgba(144, 238, 144, 0.3);
+}
+
+/* Widget Text Colors */
+.dark-theme .text-sm.text-\[var\(--text-body\)\] {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.dark-theme .text-xs.text-\[var\(--text-body\)\] {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.dark-theme .font-semibold.text-\[var\(--brown-deep\)\] {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Location Info Cards - Dark Mode */
+.dark-theme .flex.items-start.gap-4.p-4.bg-white {
+  background: rgba(30, 40, 30, 0.8) !important;
+  border: 1px solid rgba(144, 238, 144, 0.2);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(144, 238, 144, 0.1) !important;
+}
+
+/* Location Section Background */
+.dark-theme .bg-\[var\(--linen-soft\)\] {
+  background: rgba(15, 25, 15, 0.95) !important;
+}
+
+/* Location Headings */
+.dark-theme .text-\[var\(--brown-deep\)\] {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Border for Weather Widget Details */
+.dark-theme .border-white\/20 {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Weather Widget Text */
+.dark-theme .text-white\/80 {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark-theme .text-white\/70 {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark-theme .text-white\/60 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.dark-theme .text-white\/90 {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Loading State */
+.dark-theme .bg-white\/20 {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Smooth Transitions */
+.dark-theme .bg-white,
+.dark-theme .bg-gradient-to-br {
+  transition: all 0.3s ease;
+}

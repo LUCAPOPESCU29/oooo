@@ -66,15 +66,18 @@ export function BookingCalendar({
   };
 
   const isDateSelected = (date: Date) => {
-    return selectedDate?.toDateString() === date.toDateString();
+    if (!selectedDate) return false;
+    return selectedDate.toDateString() === date.toDateString();
   };
 
   const isCheckInDate = (date: Date) => {
-    return checkInDate?.toDateString() === date.toDateString();
+    if (!checkInDate) return false;
+    return checkInDate.toDateString() === date.toDateString();
   };
 
   const isCheckOutDate = (date: Date) => {
-    return checkOutDate?.toDateString() === date.toDateString();
+    if (!checkOutDate) return false;
+    return checkOutDate.toDateString() === date.toDateString();
   };
 
   const isInRange = (date: Date) => {
@@ -148,52 +151,65 @@ export function BookingCalendar({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.15 }}
-      className="bg-gradient-to-br from-white to-[var(--linen-soft)] rounded-3xl shadow-2xl p-8 border border-[var(--tan-light)]"
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      onClick={(e) => e.stopPropagation()}
+      className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <button
-          onClick={previousMonth}
-          disabled={!canGoPrevious()}
-          className={`p-3 rounded-full transition-all duration-200 ${
-            canGoPrevious()
-              ? 'hover:bg-[var(--green-deep)] hover:text-white bg-[var(--linen-soft)] text-[var(--brown-deep)]'
-              : 'opacity-30 cursor-not-allowed bg-[var(--linen-soft)] text-[var(--text-body)]'
-          }`}
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
+      <div className="bg-gradient-to-r from-[var(--green-deep)] via-[var(--green-sage)] to-[var(--green-deep)] px-6 py-4">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              previousMonth();
+            }}
+            disabled={!canGoPrevious()}
+            className={`group p-2 rounded-xl transition-all duration-300 ${
+              canGoPrevious()
+                ? 'hover:bg-white/25 bg-white/15 text-white shadow-lg hover:shadow-xl hover:scale-110'
+                : 'opacity-30 cursor-not-allowed bg-white/10 text-white/50'
+            }`}
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
 
-        <div className="flex items-center gap-3">
-          <CalendarIcon className="h-5 w-5 text-[var(--green-deep)]" />
-          <h3 className="text-xl font-bold text-[var(--brown-deep)]">
-            {monthNames[language][currentMonth.getMonth()]} {currentMonth.getFullYear()}
-          </h3>
+          <div className="flex flex-col items-center">
+            <div className="flex items-center gap-2">
+              <CalendarIcon className="h-6 w-6 text-white drop-shadow-lg" />
+              <h3 className="text-2xl font-bold text-white drop-shadow-md tracking-tight">
+                {monthNames[language][currentMonth.getMonth()]}
+              </h3>
+            </div>
+            <span className="text-white/90 text-xs font-semibold tracking-wider mt-0.5">{currentMonth.getFullYear()}</span>
+          </div>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              nextMonth();
+            }}
+            className="group p-2 rounded-xl bg-white/15 hover:bg-white/25 text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+
+      <div className="p-4 bg-gradient-to-br from-gray-50 to-white">
+        {/* Day names */}
+        <div className="grid grid-cols-7 gap-2 mb-3">
+          {dayNames[language].map((day) => (
+            <div
+              key={day}
+              className="text-center text-xs font-bold text-gray-600 uppercase tracking-wide py-1.5 bg-gray-100/50 rounded-lg"
+            >
+              {day}
+            </div>
+          ))}
         </div>
 
-        <button
-          onClick={nextMonth}
-          className="p-3 rounded-full hover:bg-[var(--green-deep)] hover:text-white bg-[var(--linen-soft)] text-[var(--brown-deep)] transition-all duration-200"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      </div>
-
-      {/* Day names */}
-      <div className="grid grid-cols-7 gap-2 mb-4">
-        {dayNames[language].map((day) => (
-          <div
-            key={day}
-            className="text-center text-sm font-bold text-[var(--green-deep)] py-2"
-          >
-            {day}
-          </div>
-        ))}
-      </div>
-
-      {/* Calendar grid */}
-      <div className="grid grid-cols-7 gap-2">
+        {/* Calendar grid */}
+        <div className="grid grid-cols-7 gap-2">
         {/* Empty cells for days before month starts */}
         {emptyDays.map((i) => (
           <div key={`empty-${i}`} className="aspect-square" />
@@ -215,40 +231,54 @@ export function BookingCalendar({
           return (
             <motion.button
               key={day}
-              onClick={() => handleDateClick(day)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDateClick(day);
+              }}
               disabled={isDisabled}
-              whileHover={!isDisabled ? { scale: 1.05 } : {}}
+              whileHover={!isDisabled ? { scale: 1.08, y: -2 } : {}}
               whileTap={!isDisabled ? { scale: 0.95 } : {}}
-              transition={{ duration: 0.1 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className={`
-                aspect-square rounded-xl flex items-center justify-center text-sm font-semibold
-                transition-all duration-100 relative overflow-hidden
+                aspect-square rounded-xl flex items-center justify-center text-base font-bold
+                transition-all duration-300 relative overflow-hidden shadow-sm
                 ${isCheckIn || isCheckOut
-                  ? 'bg-gradient-to-br from-[var(--green-deep)] to-[var(--green-sage)] text-white shadow-lg z-10'
+                  ? 'bg-gradient-to-br from-[var(--green-deep)] to-[var(--green-sage)] text-white shadow-xl ring-4 ring-[var(--green-sage)]/30 scale-105'
                   : inRange
-                    ? 'bg-[var(--green-sage)]/20 text-[var(--green-deep)]'
+                    ? 'bg-gradient-to-br from-[var(--green-sage)]/20 to-[var(--green-sage)]/10 text-[var(--green-deep)] border-2 border-[var(--green-sage)]/30'
                     : isSelected
-                      ? 'bg-gradient-to-br from-[var(--green-deep)] to-[var(--green-sage)] text-white shadow-lg'
-                      : isTodayDate && !isPast
-                        ? 'bg-white border-2 border-[var(--green-deep)] text-[var(--green-deep)]'
-                        : isDisabled
-                          ? 'text-gray-300 cursor-not-allowed bg-gray-50/50'
-                          : 'text-[var(--brown-deep)] hover:bg-[var(--green-sage)]/10 hover:border hover:border-[var(--green-sage)]'
+                      ? 'bg-gradient-to-br from-[var(--green-deep)] to-[var(--green-sage)] text-white shadow-lg ring-2 ring-[var(--green-sage)]/40'
+                      : isDisabled
+                        ? 'text-gray-300 cursor-not-allowed bg-gray-100/50 opacity-50'
+                        : isTodayDate && !isPast
+                          ? 'text-[var(--green-deep)] bg-white hover:bg-gradient-to-br hover:from-[var(--green-sage)]/10 hover:to-[var(--green-sage)]/5 border-2 border-[var(--green-sage)] shadow-md hover:shadow-lg'
+                          : 'text-gray-700 bg-white hover:bg-gradient-to-br hover:from-[var(--green-sage)]/10 hover:to-[var(--green-sage)]/5 hover:text-[var(--green-deep)] border border-gray-200 hover:border-[var(--green-sage)] hover:shadow-lg'
                 }
               `}
             >
               {/* Strikethrough effect for booked dates */}
               {isUnavailable && !isPast && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-full h-px bg-red-500/60" />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                  <div className="w-full h-1 bg-red-500 rounded-full shadow-sm" />
                 </div>
               )}
 
+              {/* Background glow for selected dates */}
+              {(isCheckIn || isCheckOut) && (
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
+              )}
+
               {/* Day number */}
-              <span className="relative z-10">{day}</span>
+              <span className="relative z-10 drop-shadow-sm">{day}</span>
+
+              {/* Today indicator dot */}
+              {isTodayDate && !isPast && !isCheckIn && !isCheckOut && (
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[var(--green-sage)] rounded-full shadow-sm" />
+              )}
             </motion.button>
           );
         })}
+        </div>
       </div>
     </motion.div>
   );

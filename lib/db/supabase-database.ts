@@ -37,6 +37,21 @@ export interface Review {
   updated_at: string;
 }
 
+export interface MaintenanceIssue {
+  id: number;
+  cabin: string;
+  title: string;
+  description: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  status: 'pending' | 'in-progress' | 'completed';
+  reported_by: string;
+  reported_by_email: string;
+  assigned_to?: string;
+  due_date?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 class SupabaseDatabase {
   private static instance: SupabaseDatabase;
 
@@ -262,6 +277,127 @@ class SupabaseDatabase {
       averageRating: Math.round(averageRating * 10) / 10,
       cabinBookings
     };
+  }
+
+  // Maintenance Issues
+  async getAllMaintenanceIssues(): Promise<MaintenanceIssue[]> {
+    const { data, error } = await supabaseAdmin
+      .from('maintenance_issues')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching maintenance issues:', error);
+      return [];
+    }
+
+    return data || [];
+  }
+
+  async createMaintenanceIssue(issue: Omit<MaintenanceIssue, 'id' | 'created_at' | 'updated_at'>): Promise<MaintenanceIssue | null> {
+    const { data, error } = await supabaseAdmin
+      .from('maintenance_issues')
+      .insert([issue])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating maintenance issue:', error);
+      return null;
+    }
+
+    return data;
+  }
+
+  async updateMaintenanceIssue(id: number, updates: Partial<MaintenanceIssue>): Promise<MaintenanceIssue | null> {
+    const { data, error } = await supabaseAdmin
+      .from('maintenance_issues')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating maintenance issue:', error);
+      return null;
+    }
+
+    return data;
+  }
+
+  // Promo Codes
+  async getAllPromoCodes(): Promise<any[]> {
+    const { data, error } = await supabaseAdmin
+      .from('promo_codes')
+      .select('*')
+      .order('created_at', { ascending: false});
+
+    if (error) {
+      console.error('Error fetching promo codes:', error);
+      return [];
+    }
+
+    return data || [];
+  }
+
+  async getPromoCodeByCode(code: string): Promise<any | null> {
+    const { data, error } = await supabaseAdmin
+      .from('promo_codes')
+      .select('*')
+      .eq('code', code.toUpperCase())
+      .single();
+
+    if (error) {
+      console.error('Error fetching promo code:', error);
+      return null;
+    }
+
+    return data;
+  }
+
+  async createPromoCode(promoCode: any): Promise<any | null> {
+    const { data, error } = await supabaseAdmin
+      .from('promo_codes')
+      .insert([promoCode])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating promo code:', error);
+      return null;
+    }
+
+    return data;
+  }
+
+  async updatePromoCode(id: number, updates: any): Promise<any | null> {
+    const { data, error } = await supabaseAdmin
+      .from('promo_codes')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating promo code:', error);
+      return null;
+    }
+
+    return data;
+  }
+
+  async deletePromoCode(id: number): Promise<boolean> {
+    const { error } = await supabaseAdmin
+      .from('promo_codes')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting promo code:', error);
+      return false;
+    }
+
+    return true;
   }
 }
 

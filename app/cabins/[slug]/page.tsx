@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { getCabinBySlug } from '@/lib/data/cabins';
-import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { CabinHero } from '@/components/cabin/cabin-hero';
 import { CabinDetails } from '@/components/cabin/cabin-details';
 import { CabinBookingCard } from '@/components/cabin/cabin-booking-card';
+import { VirtualTour } from '@/components/cabin/virtual-tour';
 
 interface CabinPageProps {
   params: Promise<{ slug: string }>;
@@ -42,12 +42,19 @@ export default async function CabinPage({ params }: CabinPageProps) {
 
   return (
     <>
-      <Navigation />
-      <main className="pt-20">
+      <main className="pt-24">
         <CabinHero cabin={cabin} />
 
         <section className="py-12 md:py-16 bg-[var(--cream-warm)]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            {/* Virtual Tour Section */}
+            <div className="mb-12 flex justify-center">
+              <VirtualTour
+                cabinName={cabin.name}
+                images={[cabin.heroImage, ...(cabin.gallery || [])]}
+              />
+            </div>
+
             <div className="grid lg:grid-cols-3 gap-12">
               {/* Left Column - Details */}
               <div className="lg:col-span-2">
@@ -56,7 +63,7 @@ export default async function CabinPage({ params }: CabinPageProps) {
 
               {/* Right Column - Booking Card */}
               <div className="lg:col-span-1">
-                <div className="lg:sticky lg:top-24">
+                <div className="lg:sticky lg:top-28">
                   <CabinBookingCard cabin={cabin} />
                 </div>
               </div>

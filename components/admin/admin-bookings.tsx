@@ -88,23 +88,23 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
         <div className="grid md:grid-cols-2 gap-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-body)]" size={20} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
               placeholder="Search by name, email, or reference..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent bg-white text-gray-900 placeholder:text-gray-500"
             />
           </div>
 
           {/* Status Filter */}
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-body)]" size={20} />
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="w-full pl-10 pr-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent appearance-none"
+              className="w-full pl-10 pr-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent appearance-none bg-white text-gray-900"
             >
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
@@ -128,7 +128,7 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-xl font-bold text-[var(--brown-deep)]">
+                  <h3 className="text-xl font-bold text-gray-900">
                     {booking.bookingReference}
                   </h3>
                   <span
@@ -143,7 +143,7 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
                     {booking.status.toUpperCase()}
                   </span>
                 </div>
-                <p className="text-sm text-[var(--text-body)]">
+                <p className="text-sm text-gray-600">
                   Created: {new Date(booking.createdAt).toLocaleString()}
                 </p>
               </div>
@@ -169,29 +169,29 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
               <div className="flex items-center gap-2">
                 <User size={16} className="text-[var(--green-deep)]" />
-                <span className="text-sm font-medium">{booking.guestName}</span>
+                <span className="text-sm font-medium text-gray-900">{booking.guestName}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail size={16} className="text-[var(--green-deep)]" />
-                <span className="text-sm">{booking.guestEmail}</span>
+                <span className="text-sm text-gray-700">{booking.guestEmail}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Home size={16} className="text-[var(--green-deep)]" />
-                <span className="text-sm font-medium">{booking.cabinName}</span>
+                <span className="text-sm font-medium text-gray-900">{booking.cabinName}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar size={16} className="text-[var(--green-deep)]" />
-                <span className="text-sm">
+                <span className="text-sm text-gray-700">
                   {new Date(booking.checkIn).toLocaleDateString()} - {new Date(booking.checkOut).toLocaleDateString()}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <User size={16} className="text-[var(--green-deep)]" />
-                <span className="text-sm">{booking.guests} guests, {booking.nights} nights</span>
+                <span className="text-sm text-gray-700">{booking.guests} guests, {booking.nights} nights</span>
               </div>
               <div className="flex items-center gap-2">
                 <DollarSign size={16} className="text-[var(--green-deep)]" />
-                <span className="text-sm font-bold">{booking.total} RON</span>
+                <span className="text-sm font-bold text-gray-900">{booking.total} RON</span>
               </div>
             </div>
 
@@ -245,14 +245,14 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
               onClick={(e) => e.stopPropagation()}
               className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
-              <h2 className="text-2xl font-bold text-[var(--brown-deep)] mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 Edit Booking
               </h2>
 
               <div className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-medium text-[var(--brown-deep)] mb-2">
+                    <label className="block font-medium text-gray-900 mb-2">
                       Guest Name
                     </label>
                     <input
@@ -261,12 +261,12 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
                       onChange={(e) =>
                         setEditingBooking({ ...editingBooking, guestName: e.target.value })
                       }
-                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent bg-white text-gray-900"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-medium text-[var(--brown-deep)] mb-2">
+                    <label className="block font-medium text-gray-900 mb-2">
                       Guest Email
                     </label>
                     <input
@@ -275,12 +275,12 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
                       onChange={(e) =>
                         setEditingBooking({ ...editingBooking, guestEmail: e.target.value })
                       }
-                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent bg-white text-gray-900"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-medium text-[var(--brown-deep)] mb-2">
+                    <label className="block font-medium text-gray-900 mb-2">
                       Check-in
                     </label>
                     <input
@@ -289,12 +289,12 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
                       onChange={(e) =>
                         setEditingBooking({ ...editingBooking, checkIn: e.target.value })
                       }
-                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent bg-white text-gray-900"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-medium text-[var(--brown-deep)] mb-2">
+                    <label className="block font-medium text-gray-900 mb-2">
                       Check-out
                     </label>
                     <input
@@ -303,12 +303,12 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
                       onChange={(e) =>
                         setEditingBooking({ ...editingBooking, checkOut: e.target.value })
                       }
-                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent bg-white text-gray-900"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-medium text-[var(--brown-deep)] mb-2">
+                    <label className="block font-medium text-gray-900 mb-2">
                       Status
                     </label>
                     <select
@@ -319,7 +319,7 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
                           status: e.target.value as Booking['status']
                         })
                       }
-                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent bg-white text-gray-900"
                     >
                       <option value="pending">Pending</option>
                       <option value="confirmed">Confirmed</option>
@@ -328,7 +328,7 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
                   </div>
 
                   <div>
-                    <label className="block font-medium text-[var(--brown-deep)] mb-2">
+                    <label className="block font-medium text-gray-900 mb-2">
                       Payment Status
                     </label>
                     <select
@@ -339,7 +339,7 @@ export function AdminBookings({ onUpdate }: AdminBookingsProps) {
                           paymentStatus: e.target.value as Booking['paymentStatus']
                         })
                       }
-                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent"
+                      className="w-full px-4 py-3 border-2 border-[var(--tan-light)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--green-deep)] focus:border-transparent bg-white text-gray-900"
                     >
                       <option value="pending">Pending</option>
                       <option value="paid">Paid</option>

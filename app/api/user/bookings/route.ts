@@ -28,12 +28,28 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get user's bookings
+    // Get user's bookings - db.getUserBookings handles conversion from snake_case to camelCase
     const bookings = await db.getUserBookings(decoded.email);
+
+    // Convert to format expected by frontend (camelCase to snake_case for the UI)
+    const formattedBookings = bookings.map(booking => ({
+      id: booking.id,
+      booking_reference: booking.bookingReference,
+      cabin_name: booking.cabinName,
+      check_in: booking.checkIn,
+      check_out: booking.checkOut,
+      guests: booking.guests,
+      nights: booking.nights,
+      total: booking.total,
+      status: booking.status,
+      payment_status: booking.paymentStatus,
+      payment_method: 'N/A', // Add payment method if needed
+      created_at: booking.createdAt
+    }));
 
     return NextResponse.json({
       success: true,
-      bookings
+      bookings: formattedBookings
     });
   } catch (error: any) {
     console.error('Fetch bookings error:', error);

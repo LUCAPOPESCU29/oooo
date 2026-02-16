@@ -1,0 +1,209 @@
+/* Dark Mode - Sign In / Sign Up Pages */
+
+/* Sign In Page Dark Mode */
+.dark-theme .min-h-screen.bg-gradient-to-br {
+  background: linear-gradient(135deg,
+    rgba(15, 25, 15, 0.98) 0%,
+    rgba(20, 35, 20, 0.98) 50%,
+    rgba(15, 25, 15, 0.98) 100%) !important;
+}
+
+/* Auth Card Container */
+.dark-theme .bg-white.rounded-2xl.shadow-2xl {
+  background: rgba(30, 40, 30, 0.95) !important;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(144, 238, 144, 0.3) !important;
+}
+
+/* Headings */
+.dark-theme .text-3xl.font-bold {
+  color: #ffffff !important;
+}
+
+.dark-theme .text-\[var\(--text-body\)\] {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Admin Login Hint Box */
+.dark-theme .bg-blue-50 {
+  background: rgba(40, 60, 40, 0.6) !important;
+  border-left-color: #90ee90 !important;
+}
+
+.dark-theme .bg-blue-50 p {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark-theme .text-blue-700 {
+  color: #b8ffaa !important;
+}
+
+/* Input Labels */
+.dark-theme label.text-sm.font-medium {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Input Fields */
+.dark-theme input[type="email"],
+.dark-theme input[type="password"],
+.dark-theme input[type="text"] {
+  background: rgba(20, 30, 20, 0.8) !important;
+  border: 2px solid rgba(144, 238, 144, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.dark-theme input[type="email"]::placeholder,
+.dark-theme input[type="password"]::placeholder,
+.dark-theme input[type="text"]::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.dark-theme input:focus {
+  border-color: #90ee90 !important;
+  box-shadow:
+    0 0 0 3px rgba(144, 238, 144, 0.2),
+    0 0 20px rgba(144, 238, 144, 0.15) !important;
+}
+
+/* Input Icons */
+.dark-theme .absolute svg {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Eye Icon for Password */
+.dark-theme button svg {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.dark-theme button:hover svg {
+  color: #90ee90 !important;
+}
+
+/* Sign In Button - Keep green gradient */
+.dark-theme .bg-gradient-to-r.from-\[var\(--green-deep\)\] {
+  background: linear-gradient(135deg, #90ee90 0%, #7ed97e 100%) !important;
+  color: #0d2e0d !important;
+  box-shadow:
+    0 4px 12px rgba(144, 238, 144, 0.3),
+    0 0 20px rgba(144, 238, 144, 0.2) !important;
+}
+
+.dark-theme .bg-gradient-to-r.from-\[var\(--green-deep\)\]:hover {
+  box-shadow:
+    0 6px 20px rgba(144, 238, 144, 0.4),
+    0 0 30px rgba(144, 238, 144, 0.3) !important;
+}
+
+/* Biometric Login Button */
+.dark-theme .bg-gradient-to-r.from-blue-600 {
+  background: linear-gradient(135deg, #5a9a5a 0%, #4a8a4a 100%) !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 4px 12px rgba(90, 154, 90, 0.3),
+    0 0 20px rgba(90, 154, 90, 0.2) !important;
+}
+
+.dark-theme .bg-gradient-to-r.from-blue-600:hover {
+  box-shadow:
+    0 6px 20px rgba(90, 154, 90, 0.4),
+    0 0 30px rgba(90, 154, 90, 0.3) !important;
+}
+
+/* Divider "Or continue with" */
+.dark-theme .border-gray-300 {
+  border-color: rgba(144, 238, 144, 0.3) !important;
+}
+
+.dark-theme .px-4.bg-white {
+  background: rgba(30, 40, 30, 0.95) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Biometric Info Box */
+.dark-theme .bg-blue-50.border.border-blue-200 {
+  background: rgba(40, 60, 40, 0.6) !important;
+  border-color: rgba(144, 238, 144, 0.4) !important;
+}
+
+.dark-theme .text-blue-600 {
+  color: #90ee90 !important;
+}
+
+/* Sign Up Link */
+.dark-theme .text-\[var\(--green-deep\)\] {
+  color: #90ee90 !important;
+}
+
+.dark-theme .text-\[var\(--green-deep\)\]:hover {
+  color: #b8ffaa !important;
+}
+
+/* Back to Home Link */
+.dark-theme .text-sm.text-\[var\(--text-body\)\] {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.dark-theme .text-sm.text-\[var\(--text-body\)\]:hover {
+  color: #90ee90 !important;
+}
+
+/* Error Messages */
+.dark-theme .bg-red-50 {
+  background: rgba(80, 30, 30, 0.6) !important;
+  border-left-color: #ff6b6b !important;
+}
+
+.dark-theme .text-red-700 {
+  color: #ffaaaa !important;
+}
+
+/* Loading State */
+.dark-theme button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Sign Up Page - Same styles apply */
+.dark-theme select {
+  background: rgba(20, 30, 20, 0.8) !important;
+  border: 2px solid rgba(144, 238, 144, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.dark-theme select option {
+  background: rgba(20, 30, 20, 0.95) !important;
+  color: #ffffff !important;
+}
+
+/* Checkbox in Sign Up */
+.dark-theme input[type="checkbox"] {
+  accent-color: #90ee90 !important;
+  background: rgba(20, 30, 20, 0.8) !important;
+  border: 2px solid rgba(144, 238, 144, 0.3) !important;
+}
+
+/* Success Messages */
+.dark-theme .bg-green-50 {
+  background: rgba(40, 60, 40, 0.6) !important;
+  border-left-color: #90ee90 !important;
+}
+
+.dark-theme .text-green-700 {
+  color: #b8ffaa !important;
+}
+
+/* Smooth Transitions */
+.dark-theme input,
+.dark-theme button,
+.dark-theme select {
+  transition: all 0.3s ease;
+}
+
+/* Focus Rings */
+.dark-theme *:focus-visible {
+  outline: 2px solid #90ee90 !important;
+  outline-offset: 2px;
+}

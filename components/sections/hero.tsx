@@ -65,23 +65,25 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Link href="/#cabins">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-[var(--brown-deep)] rounded-full px-8 min-w-[200px]"
-              >
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-[var(--brown-deep)] rounded-full px-8 min-w-[200px]"
+            >
+              <Link href="/#cabins">
                 {t.hero.exploreCabins}
-              </Button>
-            </Link>
-            <Link href="/#cabins">
-              <Button
-                size="lg"
-                className="bg-[var(--green-deep)] text-[var(--cream-warm)] hover:bg-[var(--green-sage)] rounded-full px-8 min-w-[200px]"
-              >
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              className="bg-[var(--green-deep)] text-[var(--cream-warm)] hover:bg-[var(--green-sage)] rounded-full px-8 min-w-[200px]"
+            >
+              <Link href="/#cabins">
                 {t.hero.bookYourStay}
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </div>

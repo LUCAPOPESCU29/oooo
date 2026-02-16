@@ -26,6 +26,7 @@ export interface Booking {
   paymentStatus: 'pending' | 'paid' | 'refunded';
   language: 'en' | 'ro';
   specialRequests?: string;
+  ipAddress?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -38,6 +39,36 @@ export interface Review {
   rating: number;
   comment: string;
   status: 'approved' | 'pending' | 'rejected';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MaintenanceIssue {
+  id: number;
+  cabin: string;
+  title: string;
+  description: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  status: 'pending' | 'in-progress' | 'completed';
+  reportedBy: string;
+  reportedByEmail: string;
+  assignedTo?: string;
+  dueDate?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PromoCode {
+  id: number;
+  code: string;
+  discountType: 'percentage' | 'fixed';
+  discountValue: number;
+  maxUses?: number;
+  currentUses: number;
+  validFrom: string;
+  validUntil?: string;
+  isActive: boolean;
+  description?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -87,6 +118,7 @@ function fromSupabaseBooking(booking: any): Booking {
     paymentStatus: booking.payment_status,
     language: booking.language,
     specialRequests: booking.special_requests,
+    ipAddress: booking.ip_address,
     createdAt: booking.created_at,
     updatedAt: booking.updated_at
   };
@@ -180,6 +212,170 @@ class DatabaseAdapter {
   // Statistics
   async getStatistics() {
     return await supabaseDb.getStatistics();
+  }
+
+  // Maintenance Issues
+  async getAllMaintenanceIssues(): Promise<MaintenanceIssue[]> {
+    const issues = await supabaseDb.getAllMaintenanceIssues();
+    return issues.map((issue: any) => ({
+      id: issue.id,
+      cabin: issue.cabin,
+      title: issue.title,
+      description: issue.description,
+      priority: issue.priority,
+      status: issue.status,
+      reportedBy: issue.reported_by,
+      reportedByEmail: issue.reported_by_email,
+      assignedTo: issue.assigned_to,
+      dueDate: issue.due_date,
+      createdAt: issue.created_at,
+      updatedAt: issue.updated_at
+    }));
+  }
+
+  async createMaintenanceIssue(issue: Omit<MaintenanceIssue, 'id' | 'createdAt' | 'updatedAt'>): Promise<MaintenanceIssue | null> {
+    const supabaseIssue = {
+      cabin: issue.cabin,
+      title: issue.title,
+      description: issue.description,
+      priority: issue.priority,
+      status: issue.status,
+      reported_by: issue.reportedBy,
+      reported_by_email: issue.reportedByEmail,
+      assigned_to: issue.assignedTo,
+      due_date: issue.dueDate
+    };
+    const result = await supabaseDb.createMaintenanceIssue(supabaseIssue as any);
+    return result ? {
+      id: result.id,
+      cabin: result.cabin,
+      title: result.title,
+      description: result.description,
+      priority: result.priority,
+      status: result.status,
+      reportedBy: result.reported_by,
+      reportedByEmail: result.reported_by_email,
+      assignedTo: result.assigned_to,
+      dueDate: result.due_date,
+      createdAt: result.created_at,
+      updatedAt: result.updated_at
+    } : null;
+  }
+
+  async updateMaintenanceIssue(id: number, updates: Partial<MaintenanceIssue>): Promise<MaintenanceIssue | null> {
+    const supabaseUpdates: any = {};
+    if (updates.status) supabaseUpdates.status = updates.status;
+    if (updates.assignedTo) supabaseUpdates.assigned_to = updates.assignedTo;
+    if (updates.dueDate) supabaseUpdates.due_date = updates.dueDate;
+    if (updates.priority) supabaseUpdates.priority = updates.priority;
+
+    const result = await supabaseDb.updateMaintenanceIssue(id, supabaseUpdates);
+    return result ? {
+      id: result.id,
+      cabin: result.cabin,
+      title: result.title,
+      description: result.description,
+      priority: result.priority,
+      status: result.status,
+      reportedBy: result.reported_by,
+      reportedByEmail: result.reported_by_email,
+      assignedTo: result.assigned_to,
+      dueDate: result.due_date,
+      createdAt: result.created_at,
+      updatedAt: result.updated_at
+    } : null;
+  }
+
+  // Promo Codes
+  async getAllPromoCodes(): Promise<PromoCode[]> {
+    const codes = await supabaseDb.getAllPromoCodes();
+    return codes.map((code: any) => ({
+      id: code.id,
+      code: code.code,
+      discountType: code.discount_type,
+      discountValue: Number(code.discount_value),
+      maxUses: code.max_uses,
+      currentUses: code.current_uses,
+      validFrom: code.valid_from,
+      validUntil: code.valid_until,
+      isActive: code.is_active,
+      description: code.description,
+      createdAt: code.created_at,
+      updatedAt: code.updated_at
+    }));
+  }
+
+  async getPromoCodeByCode(code: string): Promise<PromoCode | null> {
+    const result = await supabaseDb.getPromoCodeByCode(code.toUpperCase());
+    return result ? {
+      id: result.id,
+      code: result.code,
+      discountType: result.discount_type,
+      discountValue: Number(result.discount_value),
+      maxUses: result.max_uses,
+      currentUses: result.current_uses,
+      validFrom: result.valid_from,
+      validUntil: result.valid_until,
+      isActive: result.is_active,
+      description: result.description,
+      createdAt: result.created_at,
+      updatedAt: result.updated_at
+    } : null;
+  }
+
+  async createPromoCode(promoCode: Omit<PromoCode, 'id' | 'createdAt' | 'updatedAt' | 'currentUses'>): Promise<PromoCode | null> {
+    const supabasePromoCode = {
+      code: promoCode.code.toUpperCase(),
+      discount_type: promoCode.discountType,
+      discount_value: promoCode.discountValue,
+      max_uses: promoCode.maxUses,
+      valid_from: promoCode.validFrom,
+      valid_until: promoCode.validUntil,
+      is_active: promoCode.isActive,
+      description: promoCode.description
+    };
+    const result = await supabaseDb.createPromoCode(supabasePromoCode as any);
+    return result ? {
+      id: result.id,
+      code: result.code,
+      discountType: result.discount_type,
+      discountValue: Number(result.discount_value),
+      maxUses: result.max_uses,
+      currentUses: result.current_uses,
+      validFrom: result.valid_from,
+      validUntil: result.valid_until,
+      isActive: result.is_active,
+      description: result.description,
+      createdAt: result.created_at,
+      updatedAt: result.updated_at
+    } : null;
+  }
+
+  async updatePromoCode(id: number, updates: Partial<PromoCode>): Promise<PromoCode | null> {
+    const supabaseUpdates: any = {};
+    if (updates.isActive !== undefined) supabaseUpdates.is_active = updates.isActive;
+    if (updates.currentUses !== undefined) supabaseUpdates.current_uses = updates.currentUses;
+    if (updates.maxUses !== undefined) supabaseUpdates.max_uses = updates.maxUses;
+
+    const result = await supabaseDb.updatePromoCode(id, supabaseUpdates);
+    return result ? {
+      id: result.id,
+      code: result.code,
+      discountType: result.discount_type,
+      discountValue: Number(result.discount_value),
+      maxUses: result.max_uses,
+      currentUses: result.current_uses,
+      validFrom: result.valid_from,
+      validUntil: result.valid_until,
+      isActive: result.is_active,
+      description: result.description,
+      createdAt: result.created_at,
+      updatedAt: result.updated_at
+    } : null;
+  }
+
+  async deletePromoCode(id: number): Promise<boolean> {
+    return await supabaseDb.deletePromoCode(id);
   }
 }
 

@@ -13,7 +13,7 @@ export function LanguageToggle() {
       onClick={toggleLanguage}
       variant="outline"
       size="sm"
-      className="flex items-center gap-2 rounded-full border-2 border-current hover:bg-current/10 transition-all"
+      className="flex items-center gap-2 rounded-full border-2 border-[var(--green-deep)] text-[var(--green-deep)] hover:bg-[var(--green-deep)] hover:text-white transition-all"
       aria-label="Toggle language"
     >
       <Languages size={18} />

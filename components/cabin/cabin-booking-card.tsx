@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Cabin } from '@/lib/data/cabins';
 import { useLanguage } from '@/components/providers/language-provider';
-import { Loader2, Calendar as CalendarIcon } from 'lucide-react';
+import { Loader2, Calendar as CalendarIcon, Tag, Check, X } from 'lucide-react';
 import { BookingCalendar } from '@/components/calendar/booking-calendar';
 import { useAuth } from '@/lib/auth/auth-context';
+import { useToast } from '@/components/ui/toast';
+import { FuturisticSuccessPopup } from '@/components/booking/futuristic-success-popup';
 import PayNowButton from '@/components/PayNowButton';
 
 interface CabinBookingCardProps {
@@ -18,6 +20,7 @@ interface CabinBookingCardProps {
 export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
   const { t, language } = useLanguage();
   const { user } = useAuth();
+  const { showToast } = useToast();
   const router = useRouter();
   const [guests, setGuests] = useState(2);
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);
@@ -33,22 +36,46 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
   const [selectingCheckOut, setSelectingCheckOut] = useState(false);
   const [bookedDates, setBookedDates] = useState<string[]>([]);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
+  const [promoCodeApplied, setPromoCodeApplied] = useState(false);
+  const [promoCodeValidating, setPromoCodeValidating] = useState(false);
+  const [promoCodeError, setPromoCodeError] = useState('');
+  const [promoDiscount, setPromoDiscount] = useState(0);
+  const [promoDetails, setPromoDetails] = useState<any>(null);
+  const [settings, setSettings] = useState<any>(null);
+  const [cabinPrice, setCabinPrice] = useState(cabin.price);
 
-  // Fetch booked dates when component mounts
+  // Fetch booked dates and settings when component mounts
   useEffect(() => {
-    const fetchBookedDates = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`/api/bookings/dates?cabinId=${cabin.slug}`);
-        const data = await response.json();
-        if (data.bookedDates) {
-          setBookedDates(data.bookedDates);
+        // Fetch booked dates
+        const datesResponse = await fetch(`/api/bookings/dates?cabinId=${cabin.slug}`);
+        const datesData = await datesResponse.json();
+        if (datesData.bookedDates) {
+          setBookedDates(datesData.bookedDates);
+        }
+
+        // Fetch system settings
+        const settingsResponse = await fetch('/api/settings');
+        const settingsData = await settingsResponse.json();
+        if (settingsData.settings) {
+          setSettings(settingsData.settings);
+        }
+
+        // Fetch cabin price from database
+        const cabinResponse = await fetch(`/api/cabins/${cabin.slug}`);
+        const cabinData = await cabinResponse.json();
+        if (cabinData.cabin && cabinData.cabin.price_per_night) {
+          setCabinPrice(Number(cabinData.cabin.price_per_night));
         }
       } catch (error) {
-        console.error('Error fetching booked dates:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
-    fetchBookedDates();
+    fetchData();
   }, [cabin.slug]);
 
   // Auto-fill form data for authenticated users
@@ -89,20 +116,95 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
     }
   };
 
-  const subtotal = cabin.price * nights;
-  const cleaningFee = 300; // RON
-  const serviceFee = subtotal * 0.1;
-  const total = subtotal + cleaningFee + serviceFee;
+  // Apply promo code
+  const applyPromoCode = async () => {
+    if (!promoCode.trim()) {
+      setPromoCodeError(language === 'en' ? 'Please enter a promo code' : 'Introdu un cod promoțional');
+      return;
+    }
+
+    setPromoCodeValidating(true);
+    setPromoCodeError('');
+
+    try {
+      const response = await fetch('/api/promo-codes/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: promoCode.toUpperCase() })
+      });
+
+      const data = await response.json();
+
+      if (data.valid && data.promoCode) {
+        setPromoCodeApplied(true);
+        setPromoDetails(data.promoCode);
+
+        // Calculate discount
+        let discount = 0;
+        if (data.promoCode.discountType === 'percentage') {
+          discount = totalBeforePromo * (data.promoCode.discountValue / 100);
+        } else {
+          discount = data.promoCode.discountValue;
+        }
+        setPromoDiscount(discount);
+
+        showToast(
+          language === 'en'
+            ? `Promo code applied! You saved ${discount.toFixed(2)} RON`
+            : `Cod aplicat! Ai economisit ${discount.toFixed(2)} RON`,
+          'success'
+        );
+      } else {
+        setPromoCodeError(data.error || (language === 'en' ? 'Invalid promo code' : 'Cod invalid'));
+        showToast(
+          data.error || (language === 'en' ? 'Invalid promo code' : 'Cod invalid'),
+          'error'
+        );
+      }
+    } catch (error) {
+      setPromoCodeError(language === 'en' ? 'Failed to validate promo code' : 'Eroare la validare');
+      showToast(
+        language === 'en' ? 'Failed to validate promo code' : 'Eroare la validare',
+        'error'
+      );
+    } finally {
+      setPromoCodeValidating(false);
+    }
+  };
+
+  // Remove promo code
+  const removePromoCode = () => {
+    setPromoCode('');
+    setPromoCodeApplied(false);
+    setPromoCodeError('');
+    setPromoDiscount(0);
+    setPromoDetails(null);
+  };
+
+  // Use database settings or fallback to defaults
+  const cleaningFee = settings?.cleaning_fee ? Number(settings.cleaning_fee) : 50;
+  const serviceFeePercent = settings?.service_fee_percentage ? Number(settings.service_fee_percentage) / 100 : 0.1;
+  const taxPercent = settings?.tax_vat_percentage ? Number(settings.tax_vat_percentage) / 100 : 0.19;
+
+  const subtotal = cabinPrice * nights;
+  const serviceFee = subtotal * serviceFeePercent;
+  const tax = subtotal * taxPercent;
+  const totalBeforePromo = subtotal + cleaningFee + serviceFee + tax;
+  const total = totalBeforePromo - promoDiscount;
 
   const handleBooking = () => {
     // Validate dates
     if (!checkIn || !checkOut) {
-      setError(language === 'en' ? 'Please select check-in and check-out dates' : 'Selectează datele de check-in și check-out');
+      const msg = language === 'en' ? 'Please select check-in and check-out dates' : 'Selectează datele de check-in și check-out';
+      setError(msg);
+      showToast(msg, 'error');
       return;
     }
 
     if (new Date(checkIn) >= new Date(checkOut)) {
-      setError(language === 'en' ? 'Check-out must be after check-in' : 'Check-out trebuie să fie după check-in');
+      const msg = language === 'en' ? 'Check-out must be after check-in' : 'Check-out trebuie să fie după check-in';
+      setError(msg);
+      showToast(msg, 'error');
       return;
     }
 
@@ -117,14 +219,20 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
 
     const hasBookedDate = datesInRange.some(date => bookedDates.includes(date));
     if (hasBookedDate) {
-      setError(language === 'en'
+      const msg = language === 'en'
         ? 'Some dates in your selected range are already booked. Please choose different dates.'
-        : 'Unele date din intervalul selectat sunt deja rezervate. Te rugăm să alegi alte date.');
+        : 'Unele date din intervalul selectat sunt deja rezervate. Te rugăm să alegi alte date.';
+      setError(msg);
+      showToast(msg, 'error');
       return;
     }
 
     setError('');
     setShowGuestForm(true);
+    showToast(
+      language === 'en' ? 'Dates available! Please enter your details.' : 'Date disponibile! Introdu detaliile tale.',
+      'success'
+    );
   };
 
   const handleCheckout = async () => {
@@ -169,21 +277,16 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
         return;
       }
 
-      // Show payment instructions
+      // Show futuristic success popup
       if (data.bookingReference) {
         setBookingReference(data.bookingReference);
         setShowPaymentInstructions(true);
-
-        // Scroll to booking card to show success message
-        setTimeout(() => {
-          const bookingCard = document.querySelector('.rounded-2xl.shadow-xl');
-          if (bookingCard) {
-            bookingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 100);
+        setShowSuccessPopup(true);
       }
     } catch (err) {
-      setError(language === 'en' ? 'Something went wrong. Please try again.' : 'Ceva nu a mers bine. Te rugăm să încerci din nou.');
+      const msg = language === 'en' ? 'Something went wrong. Please try again.' : 'Ceva nu a mers bine. Te rugăm să încerci din nou.';
+      setError(msg);
+      showToast(msg, 'error');
       setLoading(false);
     } finally {
       setLoading(false);
@@ -373,7 +476,7 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
           <div className="space-y-3 mb-6 pb-6 border-b border-[var(--tan-light)] text-sm">
             <div className="flex justify-between text-[var(--text-body)]">
               <span>
-                {cabin.price} RON × {nights} {language === 'en' ? 'nights' : 'nopți'}
+                {cabinPrice} RON × {nights} {language === 'en' ? 'nights' : 'nopți'}
               </span>
               <span>{subtotal.toFixed(2)} RON</span>
             </div>
@@ -382,8 +485,100 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
               <span>{cleaningFee.toFixed(2)} RON</span>
             </div>
             <div className="flex justify-between text-[var(--text-body)]">
-              <span>{language === 'en' ? 'Service fee' : 'Taxă serviciu'}</span>
+              <span>{language === 'en' ? 'Service fee' : 'Taxă serviciu'} ({(serviceFeePercent * 100).toFixed(0)}%)</span>
               <span>{serviceFee.toFixed(2)} RON</span>
+            </div>
+            <div className="flex justify-between text-[var(--text-body)]">
+              <span>{language === 'en' ? 'Tax/VAT' : 'TVA'} ({(taxPercent * 100).toFixed(0)}%)</span>
+              <span>{tax.toFixed(2)} RON</span>
+            </div>
+
+            {/* Promo Code Section */}
+            <div className="pt-3 mt-3 border-t border-[var(--tan-light)]">
+              {!promoCodeApplied ? (
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <div className="relative flex-1 group">
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-xl">🎁</div>
+                      <Input
+                        type="text"
+                        value={promoCode}
+                        onChange={(e) => {
+                          setPromoCode(e.target.value.toUpperCase());
+                          setPromoCodeError('');
+                        }}
+                        placeholder={language === 'en' ? 'ENTER PROMO CODE' : 'INTRODU COD'}
+                        className="pl-11 pr-4 py-3 uppercase font-mono text-sm border-2 border-[var(--tan-light)] rounded-xl focus:border-[var(--green-deep)] focus:ring-2 focus:ring-[var(--green-deep)]/20 text-gray-900 transition-all duration-300 bg-gradient-to-r from-white to-[var(--linen-soft)] hover:shadow-md group-hover:border-[var(--green-sage)]"
+                        disabled={promoCodeValidating}
+                      />
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-[var(--green-deep)]/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                    </div>
+                    <Button
+                      size="sm"
+                      onClick={applyPromoCode}
+                      disabled={promoCodeValidating || !promoCode.trim()}
+                      className="bg-gradient-to-r from-[var(--green-deep)] to-[var(--green-sage)] text-white hover:shadow-lg hover:scale-105 transition-all duration-300 whitespace-nowrap px-6 py-3 rounded-xl font-bold disabled:opacity-50 disabled:hover:scale-100"
+                    >
+                      {promoCodeValidating ? (
+                        <Loader2 className="animate-spin" size={16} />
+                      ) : (
+                        <>
+                          <span>{language === 'en' ? 'Apply' : 'Aplică'}</span>
+                          <span className="ml-1">✨</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  {promoCodeError && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg px-3 py-2 flex items-center gap-2 animate-shake">
+                      <X size={14} className="text-red-600 flex-shrink-0" />
+                      <p className="text-xs text-red-600">{promoCodeError}</p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="relative overflow-hidden bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 border-2 border-green-300 rounded-xl p-4 shadow-lg animate-slideDown">
+                  {/* Sparkle effect */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400/20 to-transparent rounded-full blur-2xl" />
+
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-md">
+                          <Check className="text-white" size={18} strokeWidth={3} />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-1">
+                            <span className="font-mono font-black text-green-900 text-base tracking-wider">{promoCode}</span>
+                            <span className="text-lg">🎉</span>
+                          </div>
+                          <span className="text-xs text-green-700 font-medium">
+                            {language === 'en' ? 'Code Applied!' : 'Cod Aplicat!'}
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={removePromoCode}
+                        className="w-7 h-7 bg-white rounded-lg flex items-center justify-center text-green-600 hover:text-red-600 hover:bg-red-50 transition-all duration-200 shadow-sm border border-green-200 hover:border-red-200"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+
+                    <div className="bg-white/80 backdrop-blur rounded-lg p-3 border border-green-200/50">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-green-800 font-medium">
+                          {promoDetails?.description || (language === 'en' ? '💰 Discount applied' : '💰 Discount aplicat')}
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-sm text-green-900 font-black">-{promoDiscount.toFixed(2)} RON</span>
+                          <span className="text-base">💸</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -413,12 +608,12 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
         <>
           {/* Guest Details Form */}
           <div className="space-y-4 mb-6">
-            <h3 className="font-semibold text-lg text-[var(--brown-deep)] mb-4">
+            <h3 className="font-semibold text-lg text-gray-900 mb-4">
               {language === 'en' ? 'Guest Details' : 'Detalii Oaspete'}
             </h3>
 
             <div>
-              <label className="block text-sm font-semibold text-[var(--brown-deep)] mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 {language === 'en' ? 'Full Name' : 'Nume Complet'}
               </label>
               <Input
@@ -426,12 +621,12 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
                 value={guestName}
                 onChange={(e) => setGuestName(e.target.value)}
                 placeholder={language === 'en' ? 'John Doe' : 'Ion Popescu'}
-                className="w-full"
+                className="w-full text-gray-900"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-[var(--brown-deep)] mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 Email
               </label>
               <Input
@@ -439,12 +634,12 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
                 value={guestEmail}
                 onChange={(e) => setGuestEmail(e.target.value)}
                 placeholder="email@example.com"
-                className="w-full"
+                className="w-full text-gray-900"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-[var(--brown-deep)] mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 {language === 'en' ? 'Phone Number' : 'Număr de Telefon'}
               </label>
               <Input
@@ -452,7 +647,7 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
                 value={guestPhone}
                 onChange={(e) => setGuestPhone(e.target.value)}
                 placeholder={language === 'en' ? '+40 123 456 789' : '+40 123 456 789'}
-                className="w-full"
+                className="w-full text-gray-900"
               />
             </div>
 
@@ -482,25 +677,31 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
 
           {/* Action Buttons */}
           <div className="space-y-3">
-            <div className="flex justify-center">
-              <PayNowButton
-                bookingData={{
+            <Button
+              size="lg"
+              onClick={() => {
+                // Redirect to payment page with booking data
+                const params = new URLSearchParams({
                   cabinId: cabin.slug,
                   cabinName: cabin.name,
                   checkIn,
                   checkOut,
-                  guests,
-                  nights,
-                  basePrice: subtotal,
-                  cleaningFee,
-                  serviceFee,
+                  guests: guests.toString(),
+                  nights: nights.toString(),
+                  basePrice: subtotal.toString(),
+                  cleaningFee: cleaningFee.toString(),
+                  serviceFee: serviceFee.toString(),
+                  total: total.toString(),
                   guestName,
                   guestEmail,
                   guestPhone,
-                  total
-                }}
-              />
-            </div>
+                });
+                router.push(`/payment?${params.toString()}`);
+              }}
+              className="w-full bg-[var(--green-deep)] text-[var(--cream-warm)] hover:bg-[var(--green-sage)] rounded-full"
+            >
+              {language === 'en' ? 'Continue to Payment' : 'Continuă la Plată'}
+            </Button>
 
             <Button
               size="sm"
@@ -523,6 +724,24 @@ export function CabinBookingCard({ cabin }: CabinBookingCardProps) {
           </p>
         </>
       )}
+
+      {/* Futuristic Success Popup */}
+      <FuturisticSuccessPopup
+        isOpen={showSuccessPopup}
+        onClose={() => setShowSuccessPopup(false)}
+        bookingDetails={{
+          bookingReference,
+          cabinName: cabin.name,
+          checkIn,
+          checkOut,
+          guests,
+          nights,
+          total,
+          guestName,
+          guestEmail
+        }}
+        language={language}
+      />
     </div>
   );
 }

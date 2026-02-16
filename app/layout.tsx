@@ -10,11 +10,15 @@ import "./dark-mode-cabins.css";
 import "./dark-mode-gallery.css";
 import "./dark-mode-cabin-details.css";
 import "./dark-mode-calendar.css";
+import "./dark-mode-auth.css";
+import "./dark-mode-widgets.css";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { AuthProvider } from "@/lib/auth/auth-context";
 import { SettingsProvider } from "@/lib/settings/settings-context";
+import { ToastProvider } from "@/components/ui/toast";
 import { NavHeader } from "@/components/navigation/nav-header";
+import VisitorTracker from "@/components/VisitorTracker";
 
 const playfair = Playfair_Display({
   variable: "--font-heading",
@@ -50,10 +54,13 @@ export default function RootLayout({
         <SettingsProvider>
           <AuthProvider>
             <LanguageProvider>
-              <SmoothScrollProvider>
-                <NavHeader />
-                {children}
-              </SmoothScrollProvider>
+              <ToastProvider>
+                <SmoothScrollProvider>
+                  <VisitorTracker />
+                  <NavHeader />
+                  {children}
+                </SmoothScrollProvider>
+              </ToastProvider>
             </LanguageProvider>
           </AuthProvider>
         </SettingsProvider>
